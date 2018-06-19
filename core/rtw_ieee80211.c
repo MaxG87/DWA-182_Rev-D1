@@ -268,13 +268,13 @@ u8 *rtw_get_ie(const u8 *pbuf, sint index, sint *len, sint limit)
 {
 	sint tmp, i;
 	const u8 *p;
+	*len = 0;
 	if (limit < 1) {
 		return NULL;
 	}
 
 	p = pbuf;
 	i = 0;
-	*len = 0;
 	while (1) {
 		if (*p == index) {
 			*len = *(p + 1);
