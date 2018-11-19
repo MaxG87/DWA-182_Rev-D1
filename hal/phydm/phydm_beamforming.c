@@ -49,7 +49,7 @@ phydm_get_txbf_device_num(
 	struct _BF_DIV_COEX_		*dm_bdc_table = &dm->dm_bdc_table;
 	u8	act_as_bfer = 0;
 	u8	act_as_bfee = 0;
-	
+
 	if (is_sta_active(sta)) {
 		bf = &(sta->bf_info);
 	} else {
@@ -63,7 +63,7 @@ phydm_get_txbf_device_num(
 
 		if (bf->vht_beamform_cap & BEAMFORMING_VHT_BEAMFORMER_ENABLE)
 			act_as_bfee = 1;
-		
+
 	} else if (sta->support_wireless_set & WIRELESS_HT) {
 		if (bf->ht_beamform_cap & BEAMFORMING_HT_BEAMFORMEE_ENABLE)
 			act_as_bfer = 1;
@@ -74,16 +74,16 @@ phydm_get_txbf_device_num(
 	}
 
 	if (act_as_bfer)) { /* Our Device act as BFer */
-		dm_bdc_table->w_bfee_client[macid] = true; 
+		dm_bdc_table->w_bfee_client[macid] = true;
 		dm_bdc_table->num_txbfee_client++;
 	} else
-		dm_bdc_table->w_bfee_client[macid] = false; 
-	
+		dm_bdc_table->w_bfee_client[macid] = false;
+
 	if (act_as_bfee)) { /* Our Device act as BFee */
-		dm_bdc_table->w_bfer_client[macid] = true; 
+		dm_bdc_table->w_bfer_client[macid] = true;
 		dm_bdc_table->num_txbfer_client++;
 	} else
-		dm_bdc_table->w_bfer_client[macid] = false; 
+		dm_bdc_table->w_bfer_client[macid] = false;
 
 #endif
 #endif
@@ -108,16 +108,16 @@ phydm_sta_info_init(
 #endif
 
 	if (!is_sta_active(cmn_sta)) {
-		
+
 		PHYDM_DBG(dm, DBG_TXBF, "%s => sta_info(mac_id:%d) failed\n", __func__, sta_idx);
 		#if (DM_ODM_SUPPORT_TYPE == ODM_CE)
 		rtw_warn_on(1);
 		#endif
-		
+
 		return entry;
 	}
 
-#if (DM_ODM_SUPPORT_TYPE == ODM_WIN)	
+#if (DM_ODM_SUPPORT_TYPE == ODM_WIN)
 	odm_move_memory(dm, (PVOID)(entry->my_mac_addr), (PVOID)(adapter->CurrentAddress), 6);
 #elif (DM_ODM_SUPPORT_TYPE == ODM_CE)
 	odm_move_memory(dm, entry->my_mac_addr, adapter_mac_addr(sta->padapter), 6);
@@ -129,7 +129,7 @@ phydm_sta_info_init(
 	entry->bw = cmn_sta->bw_mode;
 	entry->cur_beamform = cmn_sta->bf_info.ht_beamform_cap;
 	entry->ht_beamform_cap = cmn_sta->bf_info.ht_beamform_cap;
-	
+
 #if	ODM_IC_11AC_SERIES_SUPPORT
 	if (cmn_sta->support_wireless_set & WIRELESS_VHT) {
 		entry->cur_beamform_vht = cmn_sta->bf_info.vht_beamform_cap;
@@ -138,10 +138,10 @@ phydm_sta_info_init(
 #endif
 
 
-#if (DM_ODM_SUPPORT_TYPE == ODM_WIN) /*To Be Removed */	
+#if (DM_ODM_SUPPORT_TYPE == ODM_WIN) /*To Be Removed */
 	entry->ht_beamform_cap = p_ht_info->HtBeamformCap;		/*To Be Removed*/
 	entry->vht_beamform_cap = p_vht_info->VhtBeamformCap;	/*To Be Removed*/
-	
+
 	if (sta_idx == 0) { /*client mode*/
 		#if	ODM_IC_11AC_SERIES_SUPPORT
 		if (cmn_sta->support_wireless_set & WIRELESS_VHT)
@@ -1712,7 +1712,7 @@ phydm_beamforming_init(
 	#if (DM_ODM_SUPPORT_TYPE == ODM_WIN)
 	void		*adapter = dm->adapter;
 	HAL_DATA_TYPE	*hal_data = GET_HAL_DATA(((PADAPTER)adapter));
-	
+
 	#ifdef BEAMFORMING_VERSION_1
 	if (hal_data->beamforming_version != BEAMFORMING_VERSION_1) {
 		return;

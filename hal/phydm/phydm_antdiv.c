@@ -103,8 +103,8 @@ odm_sw_ant_div_rest_after_link(
 		for (i = 0; i < ODM_ASSOCIATE_ENTRY_NUM; i++)
 			phydm_antdiv_reset_statistic(dm, i);
 	}
-	
-#endif	
+
+#endif
 }
 
 void
@@ -136,7 +136,7 @@ odm_ant_div_on_off(
 					odm_set_bb_reg(dm, 0xce0, BIT(1), 0);
 					odm_set_bb_reg(dm, 0x948, BIT(6), 0);          /*1:HW ctrl  0:SW ctrl*/
 				}
-			}			
+			}
 #endif
 
 		} else if (dm->support_ic_type & ODM_AC_ANTDIV_SUPPORT) {
@@ -375,7 +375,7 @@ phydm_set_antdiv_val(
 		PHYDM_DBG(dm, ODM_COMP_API, "[Error][antdiv]Need val_len=1\n");
 		return;
 	}
-	
+
 	odm_update_rx_idle_ant(dm, (u8)(*val_buf));
 }
 
@@ -1207,7 +1207,7 @@ odm_update_rx_idle_ant_8723d(
 	struct phydm_fat_struct			*fat_tab = &dm->dm_fat_table;
 	void		*adapter = dm->adapter;
 	u8			count = 0;
-	
+
 
 /*	odm_set_bb_reg(dm, 0x948, BIT(6), 0x1);	*/
 	odm_set_bb_reg(dm, 0x948, BIT(7), default_ant);
@@ -1777,7 +1777,7 @@ odm_s0s1_sw_ant_div_init_8188f(
 		else if (dm->support_interface == ODM_ITRF_SDIO)
 			odm_set_mac_reg(dm, 0x44, BIT(18), 0x1);	/*enable_output for P_GPIO[2]*/
 	}
-	
+
 	fat_tab->is_become_linked  = false;
 	dm_swat_table->try_flag = SWAW_STEP_INIT;
 	dm_swat_table->double_chk_flag = 0;
@@ -1810,7 +1810,7 @@ phydm_update_rx_idle_antenna_8188F(
 				odm_set_bb_reg(dm, 0x860, BIT(9)|BIT(8), 0x2);
 			}
 			odm_set_mac_reg(dm, 0x44, BIT(10), codeword); /*GPIO[2] output value*/
-		}	
+		}
 	}
 }
 #endif
@@ -2614,7 +2614,7 @@ odm_s0s1_sw_ant_div(
 					train_time_temp += 8;
 					high_traffic_train_time_l = 0x28;
 				}
-				
+
 				if (dm->support_ic_type == ODM_RTL8188F) {
 					if (dm->support_interface == ODM_ITRF_SDIO)
 						high_traffic_train_time_l += 0xa;
@@ -2906,19 +2906,19 @@ odm_s0s1_sw_ant_div(
 	if (dm->support_ic_type == ODM_RTL8188F) {
 		if (dm->support_interface == ODM_ITRF_SDIO) {
 			ODM_delay_us(200);
-			
+
 			if (fat_tab->rx_idle_ant == MAIN_ANT) {
 				fat_tab->main_ant_sum[0] = 0;
 				fat_tab->main_ant_cnt[0] = 0;
 				fat_tab->main_ant_sum_cck[0] = 0;
-				fat_tab->main_ant_cnt_cck[0] = 0;	
+				fat_tab->main_ant_cnt_cck[0] = 0;
 			} else {
 				fat_tab->aux_ant_sum[0] = 0;
 				fat_tab->aux_ant_cnt[0] = 0;
 				fat_tab->aux_ant_sum_cck[0] = 0;
-				fat_tab->aux_ant_cnt_cck[0] = 0;	
-			}	
-		}	
+				fat_tab->aux_ant_cnt_cck[0] = 0;
+			}
+		}
 	}
 
 	/* 1 6.Set next timer   (Trying state) */
@@ -3094,7 +3094,7 @@ odm_s0s1_sw_ant_div_by_ctrl_frame_process_rssi(
 		odm_antsel_statistics_of_ctrl_frame(dm, fat_tab->antsel_rx_keep_0, phy_info->rx_mimo_signal_strength[RF_PATH_A]);
 	} else {
 		fat_tab->antsel_rx_keep_0 = (fat_tab->rx_idle_ant == MAIN_ANT) ? ANT1_2G : ANT2_2G;
-		
+
 		if (fat_tab->antsel_rx_keep_0 == ANT1_2G)
 			fat_tab->ofdm_ctrl_frame_cnt_main++;
 		else
@@ -4091,12 +4091,12 @@ odm_process_rssi_for_ant_div(
 	if ((dm->support_ic_type & ODM_IC_2SS) && (!pktinfo->is_cck_rate)) {
 		if (rx_power_ant1 < 100)
 			rssi_avg = (u8)odm_convert_to_db((odm_convert_to_linear(rx_power_ant0) + odm_convert_to_linear(rx_power_ant1))>>1); /*averaged PWDB*/
-		
+
 	} else {
 		rx_power_ant0 = (u8)phy_info->rx_pwdb_all;
 		rssi_avg = rx_power_ant0;
 	}
-	
+
 #ifdef CONFIG_HL_SMART_ANTENNA_TYPE2
 	if ((dm->ant_div_type == HL_SW_SMART_ANT_TYPE2) && (fat_tab->fat_state == FAT_TRAINING_STATE))
 		phydm_process_rssi_for_hb_smtant_type2(dm, phy_info, pktinfo, rssi_avg);	/*for 8822B*/
@@ -4255,7 +4255,7 @@ odm_process_rssi_for_ant_div(
 						odm_antsel_statistics(dm, phy_info, fat_tab->antsel_rx_keep_0, pktinfo->station_id, rx_power_ant0, RSSI_METHOD, pktinfo->is_cck_rate);
 
 				} else {
-					
+
 					odm_antsel_statistics(dm, phy_info, fat_tab->antsel_rx_keep_0, pktinfo->station_id, rx_power_ant0, RSSI_METHOD, pktinfo->is_cck_rate);
 
 					#ifdef ODM_EVM_ENHANCE_ANTDIV
@@ -4692,7 +4692,7 @@ odm_antenna_diversity(
 	}
 
 	if (dm->pause_ability & ODM_BB_ANT_DIV) {
-		
+
 		PHYDM_DBG(dm, DBG_ANT_DIV, "Return: Pause AntDIv in LV=%d\n", dm->pause_lv_table.lv_antdiv);
 		return;
 	}

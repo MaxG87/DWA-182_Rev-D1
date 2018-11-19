@@ -36,7 +36,7 @@ _PHYDM_FILES := hal/phydm/phydm_debug.o	\
 								hal/phydm/halrf/halrf_powertracking_ce.o\
 								hal/phydm/halrf/halrf_powertracking.o\
 								hal/phydm/halrf/halrf_kfree.o
-		
+
 ifeq ($(CONFIG_RTL8188E), y)
 RTL871X = rtl8188e
 _PHYDM_FILES += hal/phydm/$(RTL871X)/halhwimg8188e_mac.o\

@@ -268,7 +268,7 @@ enum halrf_cmninfo_init {
 enum halrf_cmninfo_hook {
 	HALRF_CMNINFO_CON_TX,
 	HALRF_CMNINFO_SINGLE_TONE,
-	HALRF_CMNINFO_CARRIER_SUPPRESSION,	
+	HALRF_CMNINFO_CARRIER_SUPPRESSION,
 	HALRF_CMNINFO_MP_RATE_INDEX
 };
 
@@ -421,7 +421,7 @@ phydm_get_iqk_cfir(
 	boolean debug
 );
 
-void 
+void
 halrf_iqk_xym_read(
 	void *dm_void,
 	u8 path,

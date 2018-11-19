@@ -48,17 +48,17 @@ phydm_cumitek_smt_ant_mapping_table_8822b(
 	u32		path_b_0to3_idx = 0;
 	u32		path_a_4to7_idx = 0;
 	u32		path_b_4to7_idx = 0;
-	
-	path_a_0to3_idx = ((table_path_a[3] & 0xf) << 24) | ((table_path_a[2] & 0xf) << 16) 
+
+	path_a_0to3_idx = ((table_path_a[3] & 0xf) << 24) | ((table_path_a[2] & 0xf) << 16)
 						| ((table_path_a[1] & 0xf) << 8) | (table_path_a[0] & 0xf);
 
-	path_b_0to3_idx = ((table_path_b[3] & 0xf) << 28) | ((table_path_b[2] & 0xf) << 20) 
+	path_b_0to3_idx = ((table_path_b[3] & 0xf) << 28) | ((table_path_b[2] & 0xf) << 20)
 						| ((table_path_b[1] & 0xf) << 12) | ((table_path_b[0] & 0xf) << 4);
 
-	path_a_4to7_idx = ((table_path_a[7] & 0xf) << 24) | ((table_path_a[6] & 0xf) << 16) 
+	path_a_4to7_idx = ((table_path_a[7] & 0xf) << 24) | ((table_path_a[6] & 0xf) << 16)
 						| ((table_path_a[5] & 0xf) << 8) | (table_path_a[4] & 0xf);
 
-	path_b_4to7_idx = ((table_path_b[7] & 0xf) << 28) | ((table_path_b[6] & 0xf) << 20) 
+	path_b_4to7_idx = ((table_path_b[7] & 0xf) << 28) | ((table_path_b[6] & 0xf) << 20)
 						| ((table_path_b[5] & 0xf) << 12) | ((table_path_b[4] & 0xf) << 4);
 
 
@@ -88,13 +88,13 @@ phydm_cumitek_smt_ant_init_8822b(
 	PHYDM_DBG(dm, DBG_SMT_ANT, "[8822B Cumitek SmtAnt Int]\n");
 
 	/*========= MAC GPIO setting =================================*/
-	
+
 	/* Pin, pin_name, RFE_CTRL_NUM*/
-	
+
 	/* A0, 55, 5G_TRSW, 3*/
 	/* A1, 52, 5G_TRSW, 0*/
 	/* A2, 25, 5G_TRSW, 8*/
-	
+
 	/* B0, 16, 5G_TRSW, 4*/
 	/* B1, 13, 5G_TRSW, 11*/
 	/* B2, 24, 5G_TRSW, 9*/
@@ -130,21 +130,21 @@ phydm_cumitek_smt_ant_init_8822b(
 	odm_set_bb_reg(dm, 0x1990, BIT(0), 0);		/*RFE_CTRL_0*/ /*A_1*/
 	odm_set_bb_reg(dm, 0xcbc, BIT(0), 0);		/*inv*/
 	odm_set_bb_reg(dm, 0xcb0, 0xf, 0x9);
-	
+
 	odm_set_bb_reg(dm, 0x1990, BIT(8), 0);		/*RFE_CTRL_8*/ /*A_2*/
 	odm_set_bb_reg(dm, 0xcbc, BIT(8), 0);		/*inv*/
 	odm_set_bb_reg(dm, 0xcb4, 0xf, 0xa);
-	
+
 
 	/*path B*/
 	odm_set_bb_reg(dm, 0x1990, BIT(4), 1);		/*RFE_CTRL_4*/	/*B_0*/
 	odm_set_bb_reg(dm, 0xdbc, BIT(4), 0);		/*inv*/
 	odm_set_bb_reg(dm, 0xdb0, 0xf0000, 0xb);
-	
+
 	odm_set_bb_reg(dm, 0x1990, BIT(11), 1);	/*RFE_CTRL_11*/	/*B_1*/
 	odm_set_bb_reg(dm, 0xdbc, BIT(11), 0);		/*inv*/
 	odm_set_bb_reg(dm, 0xdb4, 0xf000, 0xc);
-	
+
 	odm_set_bb_reg(dm, 0x1990, BIT(9), 1);		/*RFE_CTRL_9*/	/*B_2*/
 	odm_set_bb_reg(dm, 0xdbc, BIT(9), 0);		/*inv*/
 	odm_set_bb_reg(dm, 0xdb4, 0xf0, 0xd);
@@ -202,8 +202,8 @@ phydm_cumitek_smt_tx_ant_update(
 
 	/*path-A*/
 	cumi_smtant_table->tx_ant_idx[0][mac_id] = tx_ant_idx_path_a; /*fill this value into TXDESC*/
-	
-	/*path-B*/	
+
+	/*path-B*/
 	cumi_smtant_table->tx_ant_idx[1][mac_id] = tx_ant_idx_path_b; /*fill this value into TXDESC*/
 }
 
@@ -223,15 +223,15 @@ phydm_cumitek_smt_rx_default_ant_update(
 
 	/*path-A*/
 	if (cumi_smtant_table->rx_default_ant_idx[0] != rx_ant_idx_path_a) {
-		
+
 		#if (RTL8822B_SUPPORT == 1)
 		if (dm->support_ic_type == ODM_RTL8822B) {
-			
+
 			odm_set_bb_reg(dm, 0xc08, BIT(21) | BIT(20) | BIT(19), rx_ant_idx_path_a); /*default RX antenna*/
 			odm_set_mac_reg(dm, 0x6d8, BIT(2) | BIT(1) | BIT(0), rx_ant_idx_path_a); /*default response TX antenna*/
 		}
 		#endif
-		
+
 		#if (RTL8197F_SUPPORT == 1)
 		if (dm->support_ic_type == ODM_RTL8197F) {
 		}
@@ -242,15 +242,15 @@ phydm_cumitek_smt_rx_default_ant_update(
 
 	/*path-B*/
 	if (cumi_smtant_table->rx_default_ant_idx[1] != rx_ant_idx_path_b) {
-		
+
 		#if (RTL8822B_SUPPORT == 1)
 		if (dm->support_ic_type == ODM_RTL8822B) {
-			
+
 			odm_set_bb_reg(dm, 0xe08, BIT(21) | BIT(20) | BIT(19), rx_ant_idx_path_b); /*default antenna*/
 			odm_set_mac_reg(dm, 0x6d8, BIT(5) | BIT(4) | BIT(3), rx_ant_idx_path_b); /*default response TX antenna*/
 		}
 		#endif
-		
+
 		#if (RTL8197F_SUPPORT == 1)
 		if (dm->support_ic_type == ODM_RTL8197F) {
 		}
@@ -258,7 +258,7 @@ phydm_cumitek_smt_rx_default_ant_update(
 
 		cumi_smtant_table->rx_default_ant_idx[1] = rx_ant_idx_path_b;
 	}
-	
+
 }
 
 void
@@ -293,7 +293,7 @@ phydm_cumitek_smt_ant_debug(
 			       "{4} {txdesc_mode 0:3bit, 1:2bit}\n");
 
 	} else if (dm_value[0] == 1) { /*fix rx_idle pattern*/
-	
+
 		PHYDM_SSCANF(input[2], DCMD_DECIMAL, &dm_value[1]);
 		PHYDM_SSCANF(input[3], DCMD_DECIMAL, &dm_value[2]);
 
@@ -301,8 +301,8 @@ phydm_cumitek_smt_ant_debug(
 		PDM_SNPF(out_len, used, output + used, out_len - used,
 			       "RX Ant{A, B}={%d, %d}\n", dm_value[1],
 			       dm_value[2]);
-		
-	} else if (dm_value[0] == 2) { /*fix tx pattern*/ 
+
+	} else if (dm_value[0] == 2) { /*fix tx pattern*/
 
 
 		for (i = 1; i < 4; i++) {
@@ -335,14 +335,14 @@ phydm_cumitek_smt_ant_debug(
 
 		PDM_SNPF(out_len, used, output + used, out_len - used,
 			       "Ant_Table_A[7:0]={0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x}\n",
-			       
+
 			       table_path_a[7], table_path_a[6],
 			       table_path_a[5], table_path_a[4],
 			       table_path_a[3], table_path_a[2],
 			       table_path_a[1], table_path_a[0]);
 		PDM_SNPF(out_len, used, output + used, out_len - used,
 			       "Ant_Table_B[7:0]={0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x}\n",
-			       
+
 			       table_path_b[7], table_path_b[6],
 			       table_path_b[5], table_path_b[4],
 			       table_path_b[3], table_path_b[2],
@@ -391,7 +391,7 @@ phydm_hl_smart_ant_type2_init_8822b(
 			{0xd, 0},
 			{0xe, 0},
 			{0xf, 0}
-		}; 
+		};
 	u8	rfu_codeword_table_init_5g[SUPPORT_BEAM_SET_PATTERN_NUM][MAX_PATH_NUM_8822B] ={
 		#if 1
 			{9, 1},/*0*/
@@ -428,7 +428,7 @@ phydm_hl_smart_ant_type2_init_8822b(
 			{6, 6},
 			{2, 6}
 		#endif
-		}; 		
+		};
 
 	PHYDM_DBG(dm, DBG_ANT_DIV, "***RTK 8822B SmartAnt_Init: Hong-Bo SmrtAnt Type2]\n");
 
@@ -454,10 +454,10 @@ phydm_hl_smart_ant_type2_init_8822b(
 	/*Hong_lin smart antenna HW setting*/
 	sat_tab->rfu_protocol_type = 2;
 	sat_tab->rfu_protocol_delay_time = 45;
-	
+
 	sat_tab->rfu_codeword_total_bit_num  = 16;/*max=32bit*/
 	sat_tab->rfu_each_ant_bit_num = 4;
-	
+
 	sat_tab->total_beam_set_num = 4;
 	sat_tab->total_beam_set_num_2g = 4;
 	sat_tab->total_beam_set_num_5g = 8;
@@ -487,14 +487,14 @@ phydm_hl_smart_ant_type2_init_8822b(
 	sat_tab->pre_fast_training_beam_num = sat_tab->fast_training_beam_num;
 
 	for (j = 0; j < SUPPORT_BEAM_SET_PATTERN_NUM; j++) {
-		
+
 		sat_tab->beam_set_avg_rssi_pre[j] = 0;
 		sat_tab->beam_set_train_val_diff[j] = 0;
 		sat_tab->beam_set_train_cnt[j] = 0;
 	}
 	phydm_set_rfu_beam_pattern_type2(dm);
 	fat_tab->fat_state = FAT_BEFORE_LINK_STATE;
-	
+
 }
 #endif
 
@@ -517,12 +517,12 @@ phydm_construct_hb_rfu_codeword_type2(
 			data_tmp = sat_tab->rfu_codeword_table_5g[beam_set_idx][i];
 		else
 			data_tmp = sat_tab->rfu_codeword_table_2g[beam_set_idx][i];
-			
+
 		codeword |= (data_tmp << (i * sat_tab->rfu_each_ant_bit_num));
 	}
 
 	codeword = (codeword<<8) | sync_codeword;
-	
+
 	return codeword;
 }
 
@@ -551,7 +551,7 @@ phydm_update_beam_pattern_type2(
 
 	for (i = 0; i <= (codeword_length - 1); i++) {
 		beam_ctrl_signal = (boolean)((codeword & BIT(i)) >> i);
-		
+
 		#if 1
 		if (dm->debug_components & DBG_ANT_DIV) {
 			if (i == (codeword_length - 1)) {
@@ -569,7 +569,7 @@ phydm_update_beam_pattern_type2(
 			}
 		}
 		#endif
-		
+
 		if (dm->support_ic_type == ODM_RTL8821) {
 			#if (RTL8821A_SUPPORT == 1)
 			reg44_tmp_p = reg44_ori & (~(BIT(11) | BIT(10))); /*clean bit 10 & 11*/
@@ -587,13 +587,13 @@ phydm_update_beam_pattern_type2(
 				reg44_tmp_p = reg44_tmp_p & ~(BIT(8)); /*clean bit 8*/
 				reg44_tmp_p = reg44_tmp_p ^ BIT(9); /*get new clk high/low, exclusive-or*/
 
-	
+
 				reg44_tmp_p |= (beam_ctrl_signal << 8);
-				
+
 				odm_set_mac_reg(dm, 0x44, MASKDWORD, reg44_tmp_p);
 				ODM_delay_us(sat_tab->rfu_protocol_delay_time);
 				/*PHYDM_DBG(dm, DBG_ANT_DIV, "reg44 =(( 0x%x )), reg44[9:8] = ((%x)), beam_ctrl_signal =((%x))\n", reg44_tmp_p, ((reg44_tmp_p & 0x300)>>8), beam_ctrl_signal);*/
-				
+
 			} else {
 				reg44_tmp_p = reg44_ori & (~(BIT(9) | BIT(8))); /*clean bit 9 & 8*/
 				reg44_tmp_p |= ((1 << 9) | (beam_ctrl_signal << 8));
@@ -685,9 +685,9 @@ phydm_hl_smart_ant_debug_type2(
 			if (sat_tab->fix_beam_pattern_codeword  > (one << codeword_length)) {
 				PHYDM_DBG(dm, DBG_ANT_DIV, "[ SmartAnt ] Codeword overflow, Current codeword is ((0x%x)), and should be less than ((%d))bit\n",
 					sat_tab->fix_beam_pattern_codeword, codeword_length);
-				
+
 				(sat_tab->fix_beam_pattern_codeword) &= 0xffffff;
-				
+
 				PHYDM_DBG(dm, DBG_ANT_DIV, "[ SmartAnt ] Auto modify to (0x%x)\n", sat_tab->fix_beam_pattern_codeword);
 			}
 
@@ -696,9 +696,9 @@ phydm_hl_smart_ant_debug_type2(
 			/*---------------------------------------------------------*/
 			PDM_SNPF(out_len, used, output + used,
 				       out_len - used, "Fix Beam Pattern\n");
-			
+
 			/*devide_num = (sat_tab->rfu_protocol_type == 2) ? 8 : 4;*/
-			
+
 			for (i = 0; i <= (codeword_length - 1); i++) {
 				beam_ctrl_signal = (boolean)((sat_tab->update_beam_codeword & BIT(i)) >> i);
 
@@ -802,7 +802,7 @@ phydm_hl_smart_ant_debug_type2(
 					       dm_value[2], dm_value[3],
 					       dm_value[4]);
 			}
-			
+
 		} else if (dm_value[1] == 2) { /*5G*/
 			if (dm_value[2] < SUPPORT_BEAM_SET_PATTERN_NUM) {
 				sat_tab->rfu_codeword_table_5g[dm_value[2] ][0] = (u8)dm_value[3];
@@ -871,7 +871,7 @@ phydm_hl_smart_ant_debug_type2(
 			PDM_SNPF(out_len, used, output + used,
 				       out_len - used,
 				       "[ SmartAnt ] Show total_beam_set_num{2g,5g} = {%d,%d}\n",
-				       
+
 				       sat_tab->total_beam_set_num_2g,
 				       sat_tab->total_beam_set_num_5g);
 		}
@@ -1018,7 +1018,7 @@ phydm_fast_ant_training_hl_smart_antenna_type2(
 
 				sat_tab->beam_set_avg_evm_1ss_pre[j] = (u8)avg_evm1ss;
 			}
-				
+
 			if (avg_evm1ss > target_beam_max_evm1ss) {
 				evm1ss_target_beam = j;
 				target_beam_max_evm1ss = avg_evm1ss;
@@ -1032,15 +1032,15 @@ phydm_fast_ant_training_hl_smart_antenna_type2(
 			sat_tab->beam_path_rssi_sum[j][0] = 0;
 			sat_tab->beam_path_rssi_sum[j][1] = 0;
 			sat_tab->statistic_pkt_cnt[j] = 0;
-			
+
 			sat_tab->beam_path_evm_2ss_sum[j][0] = 0;
 			sat_tab->beam_path_evm_2ss_sum[j][1] = 0;
 			sat_tab->beam_path_evm_2ss_cnt[j] = 0;
-			
+
 			sat_tab->beam_path_evm_1ss_sum[j] = 0;
 			sat_tab->beam_path_evm_1ss_cnt[j] = 0;
 		}
-		
+
 		/*[Joint Decision]-------------------------------------------------------------------*/
 		PHYDM_DBG(dm, DBG_ANT_DIV, "--->1.[RSSI]      Target Beam(( %d )) RSSI_max=((%d))\n", rssi_target_beam, target_beam_max_rssi);
 		PHYDM_DBG(dm, DBG_ANT_DIV, "--->2.[Evm2SS] Target Beam(( %d )) EVM2SS_max=((%d))\n", evm2ss_target_beam, target_beam_max_evm2ss);
@@ -1068,7 +1068,7 @@ phydm_fast_ant_training_hl_smart_antenna_type2(
 		for (j = 0; j < (sat_tab->total_beam_set_num); j++) {
 			if (decision_type == 1) {
 				per_beam_val_diff_tmp = target_beam_max_rssi - sat_tab->beam_set_avg_rssi_pre[j];
-				
+
 			} else if (decision_type == 2) {
 				per_beam_val_diff_tmp = ((u8)target_beam_max_evm2ss - sat_tab->beam_set_avg_evm_2ss_pre[j]) >> 1;
 			} else if (decision_type == 3) {
@@ -1152,7 +1152,7 @@ phydm_fast_ant_training_hl_smart_antenna_type2(
 				break;
 			}
 		}
-		
+
 		PHYDM_DBG(dm, DBG_ANT_DIV, "TrafficLoad = (( %d )), Fix_beam = (( %d )), per_beam_training_pkt_num = (( %d )), decision_holding_period = ((%d))\n",
 			dm->traffic_load, sat_tab->fix_training_num_en, sat_tab->per_beam_training_pkt_num, sat_tab->decision_holding_period);
 
@@ -1176,11 +1176,11 @@ phydm_fast_ant_training_hl_smart_antenna_type2(
 			PHYDM_DBG(dm, DBG_ANT_DIV, "Beam_Set[ %d ] training_pkt_offset = ((%d)), training_pkt_num = ((%d))\n",
 				j, sat_tab->beam_set_train_val_diff[j], sat_tab->beam_set_train_cnt[j]);
 		}
-		
+
 		sat_tab->pre_beacon_counter = sat_tab->beacon_counter;
 		sat_tab->update_beam_idx = 0;
 		sat_tab->pkt_counter = 0;
-		
+
 		sat_tab->fast_training_beam_num = 0;
 		phydm_set_rfu_beam_pattern_type2(dm);
 		sat_tab->pre_fast_training_beam_num = sat_tab->fast_training_beam_num;
@@ -1234,7 +1234,7 @@ phydm_process_rssi_for_hb_smtant_type2(
 	void		*dm_void,
 	void		*phy_info_void,
 	void		*pkt_info_void,
-	u8		rssi_avg	
+	u8		rssi_avg
 )
 {
 	struct dm_struct				*dm = (struct dm_struct *)dm_void;
@@ -1258,7 +1258,7 @@ phydm_process_rssi_for_hb_smtant_type2(
 			sat_tab->update_beam_idx++;
 			PHYDM_DBG(dm, DBG_ANT_DIV, "pre_beacon_counter = ((%d)), pkt_counter = ((%d)), update_beam_idx = ((%d))\n",
 				sat_tab->pre_beacon_counter, sat_tab->pkt_counter, sat_tab->update_beam_idx);
-			
+
 			sat_tab->pre_beacon_counter = sat_tab->beacon_counter;
 			sat_tab->pkt_counter = 0;
 		}
@@ -1277,7 +1277,7 @@ phydm_process_rssi_for_hb_smtant_type2(
 			{
 				sat_tab->beam_set_rssi_avg_sum[sat_tab->fast_training_beam_num] += rssi_avg;
 				sat_tab->statistic_pkt_cnt[sat_tab->fast_training_beam_num]++;
-				
+
 				sat_tab->beam_path_rssi_sum[sat_tab->fast_training_beam_num][0] += rx_power_ant0;
 				sat_tab->beam_path_rssi_sum[sat_tab->fast_training_beam_num][1] += rx_power_ant1;
 
@@ -1290,7 +1290,7 @@ phydm_process_rssi_for_hb_smtant_type2(
 					sat_tab->beam_path_evm_1ss_cnt[sat_tab->fast_training_beam_num]++;
 				}
 			}
-			
+
 			sat_tab->pkt_counter++;
 
 			train_pkt_number = sat_tab->beam_set_train_cnt[sat_tab->fast_training_beam_num];
@@ -1299,7 +1299,7 @@ phydm_process_rssi_for_hb_smtant_type2(
 				sat_tab->update_beam_idx++;
 				PHYDM_DBG(dm, DBG_ANT_DIV, "pre_beacon_counter = ((%d)), Update_new_beam = ((%d))\n",
 					sat_tab->pre_beacon_counter, sat_tab->update_beam_idx);
-				
+
 				sat_tab->pre_beacon_counter = sat_tab->beacon_counter;
 				sat_tab->pkt_counter = 0;
 			}
@@ -1307,7 +1307,7 @@ phydm_process_rssi_for_hb_smtant_type2(
 	}
 
 	if (sat_tab->update_beam_idx > 0) {
-		
+
 		sat_tab->update_beam_idx = 0;
 
 		if (sat_tab->fast_training_beam_num >= ((u32)sat_tab->total_beam_set_num - 1)) {
@@ -1330,7 +1330,7 @@ phydm_process_rssi_for_hb_smtant_type2(
 			fat_tab->fat_state = FAT_TRAINING_STATE;
 		}
 	}
-	
+
 }
 #endif
 
@@ -1540,13 +1540,13 @@ phydm_update_beam_pattern(
 				reg44_tmp_p = reg44_tmp_p & ~(BIT(8)); /*clean bit 8*/
 				reg44_tmp_p = reg44_tmp_p ^ BIT(9); /*get new clk high/low, exclusive-or*/
 
-	
+
 				reg44_tmp_p |= (beam_ctrl_signal << 8);
-				
+
 				odm_set_mac_reg(dm, 0x44, MASKDWORD, reg44_tmp_p);
 				ODM_delay_us(10);
 				/*PHYDM_DBG(dm, DBG_ANT_DIV, "reg44 =(( 0x%x )), reg44[9:8] = ((%x)), beam_ctrl_signal =((%x))\n", reg44_tmp_p, ((reg44_tmp_p & 0x300)>>8), beam_ctrl_signal);*/
-				
+
 			} else {
 				reg44_tmp_p = reg44_ori & (~(BIT(9) | BIT(8))); /*clean bit 9 & 8*/
 				reg44_tmp_p |= ((1 << 9) | (beam_ctrl_signal << 8));
@@ -1622,9 +1622,9 @@ phydm_hl_smart_ant_debug(
 			if (sat_tab->fix_beam_pattern_codeword  > (one << codeword_length)) {
 				PHYDM_DBG(dm, DBG_ANT_DIV, "[ SmartAnt ] Codeword overflow, Current codeword is ((0x%x)), and should be less than ((%d))bit\n",
 					sat_tab->fix_beam_pattern_codeword, codeword_length);
-				
+
 				(sat_tab->fix_beam_pattern_codeword) &= 0xffffff;
-				
+
 				PHYDM_DBG(dm, DBG_ANT_DIV, "[ SmartAnt ] Auto modify to (0x%x)\n", sat_tab->fix_beam_pattern_codeword);
 			}
 
@@ -1633,9 +1633,9 @@ phydm_hl_smart_ant_debug(
 			/*---------------------------------------------------------*/
 			PDM_SNPF(out_len, used, output + used,
 				       out_len - used, "Fix Beam Pattern\n");
-			
+
 			devide_num = (sat_tab->rfu_protocol_type == 2) ? 6 : 4;
-			
+
 			for (i = 0; i <= (codeword_length - 1); i++) {
 				beam_ctrl_signal = (boolean)((sat_tab->update_beam_codeword & BIT(i)) >> i);
 
@@ -2148,7 +2148,7 @@ phydm_smt_ant_config(
 	struct	smt_ant				*smtant_table = &dm->smtant_table;
 
 	#if (defined(CONFIG_CUMITEK_SMART_ANTENNA))
-	
+
 		dm->support_ability |= ODM_BB_SMT_ANT;
 		smtant_table->smt_ant_vendor = SMTANT_CUMITEK;
 		smtant_table->smt_ant_type = 1;
@@ -2156,14 +2156,14 @@ phydm_smt_ant_config(
 		dm->rfe_type = SMTANT_TMP_RFE_TYPE;
 		#endif
 	#elif (defined(CONFIG_HL_SMART_ANTENNA))
-	
+
 		dm->support_ability |= ODM_BB_SMT_ANT;
 		smtant_table->smt_ant_vendor = SMTANT_HON_BO;
-		
+
 		#ifdef CONFIG_HL_SMART_ANTENNA_TYPE1
 		smtant_table->smt_ant_type = 1;
 		#endif
-		
+
 		#ifdef CONFIG_HL_SMART_ANTENNA_TYPE2
 		smtant_table->smt_ant_type = 2;
 		#endif
@@ -2183,12 +2183,12 @@ phydm_smt_ant_init(
 #if (defined(CONFIG_SMART_ANTENNA))
 	struct	dm_struct		*dm = (struct dm_struct *)dm_void;
 	struct	smt_ant				*smtant_table = &dm->smtant_table;
-	
+
 	phydm_smt_ant_config(dm);
-	
+
 
 	if (smtant_table->smt_ant_vendor == SMTANT_CUMITEK) {
-		
+
 		#if (defined(CONFIG_CUMITEK_SMART_ANTENNA))
 		#if (RTL8822B_SUPPORT == 1)
 		if (dm->support_ic_type == ODM_RTL8822B) {
@@ -2196,7 +2196,7 @@ phydm_smt_ant_init(
 			/**/
 		}
 		#endif
-		
+
 		#if (RTL8197F_SUPPORT == 1)
 		if (dm->support_ic_type == ODM_RTL8197F) {
 			phydm_cumitek_smt_ant_init_8197f(dm);
@@ -2204,7 +2204,7 @@ phydm_smt_ant_init(
 		}
 		#endif
 		#endif /*#if (defined(CONFIG_CUMITEK_SMART_ANTENNA))*/
-		
+
 	} else if (smtant_table->smt_ant_vendor == SMTANT_HON_BO) {
 		#if (defined(CONFIG_HL_SMART_ANTENNA))
 		#ifdef CONFIG_HL_SMART_ANTENNA_TYPE1
@@ -2213,7 +2213,7 @@ phydm_smt_ant_init(
 			/**/
 		}
 		#endif
-		
+
 		#ifdef CONFIG_HL_SMART_ANTENNA_TYPE2
 		if (dm->support_ic_type == ODM_RTL8822B) {
 			phydm_hl_smart_ant_type2_init_8822b(dm);
@@ -2222,7 +2222,7 @@ phydm_smt_ant_init(
 		#endif
 		#endif/*#if (defined(CONFIG_HL_SMART_ANTENNA))*/
 	}
-#endif	
+#endif
 }
 
 

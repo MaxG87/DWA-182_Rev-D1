@@ -434,7 +434,7 @@ enum phydm_ic {
 #if ((RTL8188E_SUPPORT == 1) || (RTL8188F_SUPPORT == 1) || (RTL8723B_SUPPORT == 1) || (RTL8703B_SUPPORT == 1) ||\
 	(RTL8723D_SUPPORT == 1) || (RTL8881A_SUPPORT == 1) || (RTL8821A_SUPPORT == 1) || (RTL8821C_SUPPORT == 1) ||\
 	(RTL8195A_SUPPORT == 1) || (RTL8710B_SUPPORT == 1) || (RTL8195B_SUPPORT == 1))
-	
+
 	#define PHYDM_COMPILE_IC_1SS
 #endif
 
@@ -471,7 +471,7 @@ enum phydm_ic {
 #else
 	#define CONFIG_PHYSTS_3RD_TYPE		0
 #endif
-	
+
 #if ((RTL8197F_SUPPORT == 1) || (RTL8723D_SUPPORT == 1) || (RTL8822B_SUPPORT == 1) || (RTL8821C_SUPPORT == 1) || (RTL8710B_SUPPORT == 1) )
 	#define ODM_PHY_STATUS_NEW_TYPE_SUPPORT			1
 #else

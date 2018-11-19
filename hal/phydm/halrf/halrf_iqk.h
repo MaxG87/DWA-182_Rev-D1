@@ -52,7 +52,7 @@ struct dm_iqk_info {
 	u8		tmp1bcc;
 	u8		kcount;
 	u8		rfk_ing; /*bit0:IQKing, bit1:LCKing, bit2:DPKing*/
-	boolean rfk_forbidden;	
+	boolean rfk_forbidden;
 #if (RTL8814A_SUPPORT == 1 || RTL8822B_SUPPORT == 1 || RTL8821C_SUPPORT == 1)
 	u32		iqk_channel[2];
 	boolean		iqk_fail_report[2][4][2]; /*channel/path/TRX(TX:0, RX:1) */
@@ -71,7 +71,7 @@ struct dm_iqk_info {
 	boolean is_reload;
 	boolean segment_iqk;
 	boolean is_hwtx;
-	
+
 	boolean	xym_read;
 	boolean trximr_enable;
 	u32		rx_xym[2][10];

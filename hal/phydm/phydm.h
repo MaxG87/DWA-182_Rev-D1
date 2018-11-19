@@ -115,11 +115,11 @@ extern const u16 phy_rate_table[28];
 #define		dm_type_by_driver		1
 
 struct phydm_phystatus_statistic {
-	
+
 	/*[CCK]*/
 	u32		rssi_cck_sum;
 	u32		rssi_cck_cnt;
-	/*[OFDM]*/	
+	/*[OFDM]*/
 	u32		rssi_ofdm_sum;
 	u32		rssi_ofdm_cnt;
 	u32		evm_ofdm_sum;
@@ -147,13 +147,13 @@ struct phydm_phystatus_statistic {
 	#if (defined(PHYDM_COMPILE_ABOVE_4SS))
 	u32		rssi_4ss_cnt;
 	u32		rssi_4ss_sum[4];
-	u32		evm_4ss_sum[4];	
+	u32		evm_4ss_sum[4];
 	u32		snr_4ss_sum[4];
 	#endif
 };
 
 struct phydm_phystatus_avg {
-	
+
 	/*[CCK]*/
 	u8		rssi_cck_avg;
 	/*[OFDM]*/
@@ -179,14 +179,14 @@ struct phydm_phystatus_avg {
 	/*[4SS]*/
 	#if (defined(PHYDM_COMPILE_ABOVE_4SS))
 	u8		rssi_4ss_avg[4];
-	u8		evm_4ss_avg[4];	
+	u8		evm_4ss_avg[4];
 	u8		snr_4ss_avg[4];
 	#endif
 };
 
 struct odm_phy_dbg_info {
 	/*ODM Write,debug info*/
-	
+
 	u32		num_qry_phy_status_cck;
 	u32		num_qry_phy_status_ofdm;
 #if (ODM_PHY_STATUS_NEW_TYPE_SUPPORT == 1)
@@ -456,7 +456,7 @@ enum phydm_dbg_comp {
 	DBG_DFS			= BIT(F11_DFS),
 	DBG_DYN_ARFR		= BIT(F12_DYN_ARFR),
 	DBG_ADPTVTY		= BIT(F13_ADPTVTY),
-	DBG_CFO_TRK		= BIT(F14_CFO_TRK), 
+	DBG_CFO_TRK		= BIT(F14_CFO_TRK),
 	DBG_ENV_MNTR		= BIT(F15_ENV_MNTR),
 	DBG_PRI_CCA		= BIT(F16_PRI_CCA),
 	DBG_ADPTV_SOML	= BIT(F17_ADPTV_SOML),
@@ -571,7 +571,7 @@ struct	phydm_iot_center {
 	/*-----------HOOK BEFORE REG INIT-----------*/
 
 	u8			support_platform;/*PHYDM Platform info WIN/AP/CE = 1/2/3 */
-	u8			normal_rx_path;	
+	u8			normal_rx_path;
 	boolean		brxagcswitch; /* for rx AGC table switch in Microsoft case */
 	u8			support_interface;/*PHYDM PCIE/USB/SDIO = 1/2/3*/
 	u32			support_ic_type;	/*PHYDM supported IC*/
@@ -617,9 +617,9 @@ struct	phydm_iot_center {
 	u8			is_receiver_blocking_en;
 	u16			fw_offload_ability;
 /*-----------HOOK BEFORE REG INIT-----------*/
-/*===========================================================*/	
+/*===========================================================*/
 /*====[ CALL BY Reference ]=========================================*/
-/*===========================================================*/	
+/*===========================================================*/
 
 	u64			*num_tx_bytes_unicast;	/*TX Unicast byte count*/
 	u64			*num_rx_bytes_unicast;	/*RX Unicast byte count*/
@@ -652,9 +652,9 @@ struct	phydm_iot_center {
 	u8			*mp_mode;
 	u32			*interrupt_mask;
 	u8			*bb_op_mode;
-/*===========================================================*/	
+/*===========================================================*/
 /*====[ CALL BY VALUE ]===========================================*/
-/*===========================================================*/	
+/*===========================================================*/
 
 	u8			disable_phydm_watchdog;
 	boolean		is_link_in_process;
@@ -749,7 +749,7 @@ struct	phydm_iot_center {
 	u8			antdiv_evm_en;
 	u8			bdc_holdstate;
 	/*---------------------------*/
-	
+
 	u8			ndpa_period;
 	boolean		h2c_rarpt_connect;
 	boolean		cck_agc_report_type;
@@ -778,7 +778,7 @@ struct	phydm_iot_center {
 	u8			odm_regulation_2_4g;
 	u8			odm_regulation_5g;
 	/*-----------------------------------------------------------*/
-	
+
 	u8			pre_dbg_priority;
 	u8			nbi_set_result;
 	u8			c2h_cmd_start;
@@ -798,7 +798,7 @@ struct	phydm_iot_center {
 	boolean		is_disable_lna_sat_chk;
 	boolean		is_disable_gain_table_switch;
 	/*-----------------------------------------------------------*/
-	
+
 	boolean		is_disable_dym_ecs;
 	boolean		is_disable_dym_ant_weighting;
 	struct sta_info	*odm_sta_info[ODM_ASSOCIATE_ENTRY_NUM];/*odm_sta_info, 2012/01/12 MH For MP, we need to reduce one array pointer for default port.??*/
@@ -821,7 +821,7 @@ struct	phydm_iot_center {
 	boolean		is_psd_in_process;
 	boolean		is_psd_active;
 	/*-----------------------------------------------------------*/
-	
+
 	boolean		bsomlenabled;		/* for dynamic SoML control */
 	boolean		bhtstfdisabled;		/* for dynamic HTSTF gain control	*/
 	boolean		disrxhpsoml;			/* for dynamic RxHP control with SoML on/off */
@@ -918,7 +918,7 @@ struct	phydm_iot_center {
 #ifdef PHYDM_SUPPORT_CCKPD
 	struct phydm_cckpd_struct				dm_cckpd_table;
 #endif
-	
+
 #ifdef PHYDM_PRIMARY_CCA
 	struct phydm_pricca_struct				dm_pri_cca;
 #endif
@@ -933,7 +933,7 @@ struct	phydm_iot_center {
 	struct ccx_info						dm_ccx_info;
 	struct _hal_rf_						rf_table; 		/*for HALRF function*/
 	struct dm_rf_calibration_struct		rf_calibrate_info;
-	struct odm_power_trim_data			power_trim_data;	
+	struct odm_power_trim_data			power_trim_data;
 #if (RTL8822B_SUPPORT == 1)
 	struct drp_rtl8822b_struct				phydm_rtl8822b;
 #endif
@@ -973,7 +973,7 @@ struct	phydm_iot_center {
 	struct	phydm_auto_dbg_struc			auto_dbg_table;
 #endif
 
-	struct	phydm_pause_lv				pause_lv_table;	
+	struct	phydm_pause_lv				pause_lv_table;
 	struct	phydm_api_stuc 				api_table;
 #ifdef PHYDM_POWER_TRAINING_SUPPORT
 	struct	phydm_pow_train_stuc			pow_train_table;
@@ -1071,7 +1071,7 @@ phydm_watchdog_lps_32k(
 void
 phydm_txcurrentcalibration(
 	struct dm_struct	*dm
-);	
+);
 
 void
 phydm_dm_early_init(
@@ -1128,12 +1128,12 @@ phydm_watchdog_mp(
 u8
 phydm_pause_func(
 	void					*dm_void,
-	enum phydm_func_idx	pause_func,	
+	enum phydm_func_idx	pause_func,
 	enum phydm_pause_type	pause_type,
 	enum phydm_pause_level	pause_lv,
 	u8						val_lehgth,
 	u32						*val_buf
-	
+
 );
 
 void
@@ -1205,18 +1205,18 @@ phydm_receiver_blocking(
 );
 
 #if (DM_ODM_SUPPORT_TYPE == ODM_WIN)
-void 
+void
 odm_init_all_work_items(
 	struct dm_struct	*dm
 );
-void 
+void
 odm_free_all_work_items(
 	struct dm_struct	*dm
 );
 #endif	/*#if (DM_ODM_SUPPORT_TYPE == ODM_WIN)*/
 
 #if (DM_ODM_SUPPORT_TYPE == ODM_CE)
-void 
+void
 odm_dtc(
 	struct dm_struct	*dm
 );

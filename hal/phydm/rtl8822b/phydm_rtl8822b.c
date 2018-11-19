@@ -55,7 +55,7 @@ phydm_dynamic_parameters_ota(
 		if (dm->rssi_min >= rssi_l2h) {
 			/*if (dm->bhtstfdisabled == false)*/
 				odm_set_bb_reg(dm, 0x8d8, BIT(17), 0x1);
-			
+
 			odm_set_bb_reg(dm, 0x98c, 0x7fc0000, 0x0);
 			odm_set_bb_reg(dm, 0x818, 0x7000000, 0x1);
 			odm_set_bb_reg(dm, 0xc04, BIT(18), 0x0);
@@ -70,7 +70,7 @@ phydm_dynamic_parameters_ota(
 		} else if (dm->rssi_min < rssi_h2l) {
 			/*if (dm->bhtstfdisabled == true)*/
 				odm_set_bb_reg(dm, 0x8d8, BIT(17), 0x0);
-			
+
 			odm_set_bb_reg(dm, 0x98c, MASKDWORD, 0x43440000);
 			odm_set_bb_reg(dm, 0x818, 0x7000000, 0x4);
 			odm_set_bb_reg(dm, 0xc04, (BIT(18)|BIT(21)), 0x0);
@@ -103,7 +103,7 @@ _set_tx_a_cali_value(
 	boolean is_minus = false;
 	u8 comp_value = 0;
 
-	
+
 		switch (offset) {
 		case 0x0:
 			odm_set_rf_reg(dm, rf_path, 0x18, 0xFFFFF, 0X10124);
@@ -157,37 +157,37 @@ _set_tx_a_cali_value(
 			is_minus = true;
 			comp_value = 3;
 			break;
-			
+
 		case 0xF4:
 			is_minus = true;
 			comp_value = 2;
 			break;
-			
+
 		case 0xF2:
 			is_minus = true;
 			comp_value = 1;
 			break;
-			
+
 		case 0xF3:
 			is_minus = false;
 			comp_value = 1;
 			break;
-			
+
 		case 0xF5:
 			is_minus = false;
 			comp_value = 2;
 			break;
-			
+
 		case 0xF7:
 			is_minus = false;
 			comp_value = 3;
 			break;
-			
+
 		case 0xF9:
 			is_minus = false;
 			comp_value = 4;
 			break;
-		
+
 		/* do nothing case */
 		case 0xF0:
 		default:
@@ -263,11 +263,11 @@ phydm_txcurrentcalibration(
 	/* save original 0x18 value */
 	orig_rf0x18_path_a = odm_get_rf_reg(dm, RF_PATH_A, 0x18, 0xFFFFF);
 	orig_rf0x18_path_b = odm_get_rf_reg(dm, RF_PATH_B, 0x18, 0xFFFFF);
-	
+
 	/* define efuse content */
 		efuse0x3D8 = dm->efuse0x3d8;
 		efuse0x3D7 = dm->efuse0x3d7;
-	
+
 	/* check efuse content to judge whether need to calibration or not */
 	if (0xFF == efuse0x3D7) {
 		PHYDM_DBG(dm, ODM_COMP_MP, "efuse content 0x3D7 == 0xFF, No need to do TxA cali\n");
@@ -277,7 +277,7 @@ phydm_txcurrentcalibration(
 	/* write RF register for calibration */
 	_txa_bias_cali_4_each_path(dm, RF_PATH_A, efuse0x3D7);
 	_txa_bias_cali_4_each_path(dm, RF_PATH_B, efuse0x3D8);
-	
+
 	/* restore original 0x18 value */
 	odm_set_rf_reg(dm, RF_PATH_A, 0x18, 0xFFFFF, orig_rf0x18_path_a);
 	odm_set_rf_reg(dm, RF_PATH_B, 0x18, 0xFFFFF, orig_rf0x18_path_b);
@@ -342,7 +342,7 @@ phydm_dynamic_select_cck_path_8822b(
 	}
 
 	PHYDM_DBG(dm, ODM_PHY_CONFIG,"path_a_fa = %d, path_b_fa = %d\n", drp_8822b->path_a_cck_fa, drp_8822b->path_b_cck_fa);
-	
+
 }
 
 
@@ -362,13 +362,13 @@ phydm_somlrxhp_setting(
 		odm_set_bb_reg(dm, 0xc04, (BIT(21)|BIT(18)), 0x0);
 		odm_set_bb_reg(dm, 0xe04, (BIT(21)|BIT(18)), 0x0);
 	}
-	
+
 	/* Dynamic RxHP setting with SoML on/off apply on all RFE type */
 	if (!switch_soml && ((dm->rfe_type == 1) || (dm->rfe_type == 6) || (dm->rfe_type == 7) || (dm->rfe_type == 9))) {
 		odm_set_bb_reg(dm, 0x8cc, MASKDWORD, 0x08108000);
 		odm_set_bb_reg(dm, 0x8d8, BIT(27), 0x0);
 	}
-	
+
 	if (*dm->channel <= 14) {
 		if (switch_soml && (!((dm->rfe_type == 3) || (dm->rfe_type == 5) || (dm->rfe_type == 8) || (dm->rfe_type == 17)))) {
 			odm_set_bb_reg(dm, 0x8cc, MASKDWORD, 0x08108000);
@@ -381,7 +381,7 @@ phydm_somlrxhp_setting(
 		}
 	}
 
-#if 0		
+#if 0
 	if (!((dm->rfe_type == 1) || (dm->rfe_type == 6) || (dm->rfe_type == 7) || (dm->rfe_type == 9))) {
 		if (*dm->channel <= 14) {
 			/* TFBGA iFEM SoML on/off with RxHP always high-to-low */
@@ -405,12 +405,12 @@ phydm_somlrxhp_setting(
 			} else {
 				odm_set_bb_reg(dm, 0x8cc, MASKDWORD, 0x08108492);
 				odm_set_bb_reg(dm, 0x8d8, BIT(27), 0x1);
-			}	
+			}
 		}
 		PHYDM_DBG(dm, ODM_COMP_API, "Dynamic RxHP control with SoML is enable !!\n");
-	} 
+	}
 #endif
-	
+
 }
 
 void
@@ -455,7 +455,7 @@ phydm_dynamic_ant_weighting_8822b(
 			PHYDM_DBG(dm, ODM_COMP_API, "Equal weighting ,rssi_min = %d\n, 0xf94[2:0] = 0x%x\n", dm->rssi_min, reg_8);
 		} else if (dm->rssi_min <= rssi_h2l) {
 			odm_set_bb_reg(dm, 0x98c, MASKDWORD, 0x43440000);
-	
+
 			/*fix sec_min_wgt = 1/2*/
 			reg_8 = (u8)odm_get_bb_reg(dm, 0xf94, BIT(0)|BIT(1)|BIT(2));
 			PHYDM_DBG(dm, ODM_COMP_API, "AGC weighting ,rssi_min = %d\n, 0xf94[2:0] = 0x%x\n", dm->rssi_min, reg_8);

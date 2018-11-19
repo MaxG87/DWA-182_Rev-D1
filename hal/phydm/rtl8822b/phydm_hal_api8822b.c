@@ -114,7 +114,7 @@ phydm_rxagc_switch_8822b(
 		PHYDM_DBG(dm, ODM_COMP_API, "AGC table are the same on path-a and b\n");
 
 	}
-		
+
 }
 
 __iram_odm_func__
@@ -134,7 +134,7 @@ phydm_igi_toggle_8822b(
 
 
 __iram_odm_func__
-void 
+void
 phydm_8822b_type15_rfe(
 	struct dm_struct				*dm,
 	u8					channel
@@ -146,14 +146,14 @@ phydm_8822b_type15_rfe(
 			odm_set_bb_reg(dm, 0xeb0, 0xffffff, 0x777777);
 			odm_set_bb_reg(dm, 0xcb4, MASKBYTE1, 0x77);
 			odm_set_bb_reg(dm, 0xeb4, MASKBYTE1, 0x77);
-		
+
 	} else if ((channel > 35) && (channel <= 64)) {
 			/* signal source */
 			odm_set_bb_reg(dm, 0xcb0, 0xffffff, 0x777747);
 			odm_set_bb_reg(dm, 0xeb0, 0xffffff, 0x777747);
 			odm_set_bb_reg(dm, 0xcb4, MASKBYTE0, 0x57);
 			odm_set_bb_reg(dm, 0xeb4, MASKBYTE0, 0x57);
-				
+
 	} else if (channel > 64) {
 			/* signal source */
 			odm_set_bb_reg(dm, 0xcb0, 0xffffff, 0x777747);
@@ -163,14 +163,14 @@ phydm_8822b_type15_rfe(
 
 	} else
 			return;
-	
+
 	/* inverse or not */
 	odm_set_bb_reg(dm, 0xcbc, 0x3f, 0x0);
 	odm_set_bb_reg(dm, 0xcbc, (BIT(11) | BIT(10) | BIT(9) | BIT(8)), 0x0);
 	odm_set_bb_reg(dm, 0xebc, 0x3f, 0x0);
 	odm_set_bb_reg(dm, 0xebc, (BIT(11) | BIT(10) | BIT(9) | BIT(8)), 0x0);
 
-	
+
 	/* antenna switch table */
 	if (channel <= 14) {
 		if ((dm->rx_ant_status == BB_PATH_AB) || (dm->tx_ant_status == BB_PATH_AB)) {
@@ -224,17 +224,17 @@ phydm_rfe_8822b_setting(
 
 	debug_level = 5; /*no use, just prevent FW 3081 compile warning*/
 
-	PHYDM_DBG(dm, ODM_PHY_CONFIG, "8822B RFE[%d]:{Path=0x%x}{inv_en=%d}{source=0x%x}\n", 
+	PHYDM_DBG(dm, ODM_PHY_CONFIG, "8822B RFE[%d]:{Path=0x%x}{inv_en=%d}{source=0x%x}\n",
 		rfe_num, path_mux_sel, inv_en, source_sel);
 
 	if(rfe_num > 11) {
 		PHYDM_DBG(dm, ODM_PHY_CONFIG, "[Warning] Wrong RFE num=%d}\n", rfe_num);
 		return;
 	}
-	
+
 	 /*[Path_mux_sel]*/
 	odm_set_bb_reg(dm, 0x1990, BIT(rfe_num), ((path_mux_sel == BB_PATH_A) ? 0 : 1));
-	 
+
 	/*[Inv_en]*/
 	odm_set_bb_reg(dm, 0xcbc, BIT(rfe_num), (u32)inv_en);
 	odm_set_bb_reg(dm, 0xebc, BIT(rfe_num), (u32)inv_en);
@@ -256,7 +256,7 @@ phydm_rfe_8822b_init(
 )
 {
 	PHYDM_DBG(dm, ODM_PHY_CONFIG, "8822B RFE_Init, RFE_type=((%d))\n", dm->rfe_type);
-	
+
 	/* chip top mux */
 	odm_set_bb_reg(dm, 0x64, BIT(29) | BIT(28), 0x3);
 	odm_set_bb_reg(dm, 0x4c, BIT(26) | BIT(25), 0x0);
@@ -281,7 +281,7 @@ phydm_rfe_8822b(
 	boolean	is_channel_2g = (channel <= 14) ? true : false;
 	u8		rfe_type = dm->rfe_type;
 
-	PHYDM_DBG(dm, ODM_PHY_CONFIG, "[8822B] Update RFE PINs: CH:%d, T/RX_path:{ 0x%x, 0x%x}, cut_ver:%d, rfe_type:%d\n", 
+	PHYDM_DBG(dm, ODM_PHY_CONFIG, "[8822B] Update RFE PINs: CH:%d, T/RX_path:{ 0x%x, 0x%x}, cut_ver:%d, rfe_type:%d\n",
 		channel, dm->tx_ant_status, dm->rx_ant_status, dm->cut_version, rfe_type);
 
 	if (((channel > 14) && (channel < 36)) || ((channel == 0)))
@@ -400,7 +400,7 @@ phydm_rfe_8822b(
 				odm_set_bb_reg(dm, 0xcb8, BIT(5), 0);
 				odm_set_bb_reg(dm, 0xeb8, BIT(5), 0);
 			}
-			
+
 			/* inverse or not */
 			odm_set_bb_reg(dm, 0xcbc, 0x3f, 0x0);
 			odm_set_bb_reg(dm, 0xcbc, (BIT(11) | BIT(10)), 0x0);
@@ -433,7 +433,7 @@ phydm_rfe_8822b(
 			odm_set_bb_reg(dm, 0xeb0, 0xffffff, 0x745774);
 			odm_set_bb_reg(dm, 0xcb4, MASKBYTE1, 0x57);
 			odm_set_bb_reg(dm, 0xeb4, MASKBYTE1, 0x57);
-	
+
 		} else {
 			/* signal source */
 			odm_set_bb_reg(dm, 0xcb0, 0xffffff, 0x477547);
@@ -474,7 +474,7 @@ phydm_rfe_8822b(
 	#if (defined(CONFIG_CUMITEK_SMART_ANTENNA))
 	else if (rfe_type == SMTANT_TMP_RFE_TYPE) {
 		/*modify from RFE_TYPE = 1*/
-	
+
 		if (is_channel_2g) {
 			#if 0
 			/* signal source */
@@ -484,13 +484,13 @@ phydm_rfe_8822b(
 			odm_set_bb_reg(dm, 0xeb4, MASKBYTE1, 0x57);
 			odm_set_bb_reg(dm, 0xcb8, BIT(4), 0);
 			odm_set_bb_reg(dm, 0xeb8, BIT(4), 0);
-			
+
 			/* inverse or not */
 			odm_set_bb_reg(dm, 0xcbc, 0x3f, 0x0);
 			odm_set_bb_reg(dm, 0xcbc, (BIT(11) | BIT(10)), 0x0);
 			odm_set_bb_reg(dm, 0xebc, 0x3f, 0x0);
 			odm_set_bb_reg(dm, 0xebc, (BIT(11) | BIT(10)), 0x0);
-			
+
 			#endif
 		} else {
 			/* signal source */
@@ -525,7 +525,7 @@ phydm_rfe_8822b(
 			odm_set_bb_reg(dm, 0xcb8, BIT(5), 0);
 			odm_set_bb_reg(dm, 0xeb8, BIT(5), 0);
 		}
-			
+
 		/* delay 400ns for PAPE */
 		/* odm_set_bb_reg(dm, 0x810, MASKBYTE3|BIT20|BIT21|BIT22|BIT23, 0x211); */
 
@@ -584,7 +584,7 @@ phydm_ccapar_by_rfe_8822b(
 		is_rfe_type = true;
 	} else
 		odm_move_memory(dm, cca_ifem, cca_ifem_ccut, 12 * 4);
-	
+
 	PHYDM_DBG(dm, ODM_PHY_CONFIG, "%s: Update CCA parameters for Ccut\n", __func__);
 	}
 
@@ -647,7 +647,7 @@ phydm_ccapar_by_rfe_8822b(
 	/* enlarge big jump size in type 16 for MS case */
 	if ((dm->rfe_type == 16) && (central_ch_8822b <= 14))
 		odm_set_bb_reg(dm, 0x8c8, BIT(3) | BIT (2) | BIT(1), 0x3);
-	
+
 	PHYDM_DBG(dm, ODM_PHY_CONFIG, "%s: (Pkt%d, Intf%d, RFE%d), col = %d\n",
 		__func__, dm->package_type, dm->support_interface, dm->rfe_type, col);
 }
@@ -808,7 +808,7 @@ phydm_init_hw_info_by_rfe_type_8822b(
 		odm_cmn_info_init(dm, ODM_CMNINFO_BOARD_TYPE, 0);
 
 		odm_cmn_info_init(dm, ODM_CMNINFO_PACKAGE_TYPE, 1);
-		
+
 		odm_cmn_info_init(dm, ODM_CMNINFO_EXT_LNA, false);
 		odm_cmn_info_init(dm, ODM_CMNINFO_5G_EXT_LNA, false);
 		odm_cmn_info_init(dm, ODM_CMNINFO_EXT_PA, false);
@@ -832,9 +832,9 @@ phydm_init_hw_info_by_rfe_type_8822b(
 		odm_cmn_info_init(dm, ODM_CMNINFO_APA, (TYPE_APA1 & (mask_path_a | mask_path_b)));
 		odm_cmn_info_init(dm, ODM_CMNINFO_GLNA, (TYPE_GLNA1 & (mask_path_a | mask_path_b)));
 		odm_cmn_info_init(dm, ODM_CMNINFO_ALNA, (TYPE_ALNA1 & (mask_path_a | mask_path_b)));
-		
+
 		odm_cmn_info_init(dm, ODM_CMNINFO_PACKAGE_TYPE, 2);
-		
+
 		odm_cmn_info_init(dm, ODM_CMNINFO_EXT_LNA, true);
 		odm_cmn_info_init(dm, ODM_CMNINFO_5G_EXT_LNA, true);
 		odm_cmn_info_init(dm, ODM_CMNINFO_EXT_PA, true);
@@ -1162,7 +1162,7 @@ phydm_dynamic_spur_det_eliminate(
 		PHYDM_DBG(dm, ODM_COMP_API, "[Return Point] Idx Is Exceed, Not Support Dynamic Spur Detection and Eliminator\n");
 		return;
 	}
-	
+
 	PHYDM_DBG(dm, ODM_COMP_API, "[%s] idx = %d, BW = %d, Channel = %d\n", __func__, idx, *dm->band_width, *dm->channel);
 
 	for (k = 0; k < FREQ_PT_2G_NUM; k++) {
@@ -1411,7 +1411,7 @@ config_phydm_switch_band_8822b(
 		/* RxHP dynamic control */
 		/* QFN eFEM RxHP are always low at 2G */
 		reg_8 = odm_get_bb_reg(dm, 0x19a8, BIT(31));
-		
+
 		/* SoML on */
 		if (reg_8 == 0x1) {
 			odm_set_bb_reg(dm, 0xc04, (BIT(18)|BIT(21)), 0x0);
@@ -1429,8 +1429,8 @@ config_phydm_switch_band_8822b(
 
 		/* SoML off */
 		if (reg_8 == 0x0) {
-			odm_set_bb_reg(dm, 0xc04, (BIT(18)|BIT(21)), 0x0); 
-			odm_set_bb_reg(dm, 0xe04, (BIT(18)|BIT(21)), 0x0); 
+			odm_set_bb_reg(dm, 0xc04, (BIT(18)|BIT(21)), 0x0);
+			odm_set_bb_reg(dm, 0xe04, (BIT(18)|BIT(21)), 0x0);
 			if ((dm->rfe_type == 1) || (dm->rfe_type == 6) || (dm->rfe_type == 7) || (dm->rfe_type == 9)) {
 				odm_set_bb_reg(dm, 0x8cc, MASKDWORD, 0x08108000);
 				odm_set_bb_reg(dm, 0x8d8, BIT(19), 0x0);
@@ -1457,7 +1457,7 @@ config_phydm_switch_band_8822b(
 		/*CCA Mask*/
 	#if (DM_ODM_SUPPORT_TYPE == ODM_AP)
 		odm_set_bb_reg(dm, 0x814, 0x0000FC00, 34); /*CCA mask = 13.6us*/
-	#else	
+	#else
 		if ((!dm->wifi_test))
 			odm_set_bb_reg(dm, 0x814, 0x0000FC00, 34); /*CCA mask = 13.6us*/
 		else
@@ -1481,8 +1481,8 @@ config_phydm_switch_band_8822b(
 
 		/* SoML off */
 		if (reg_8 == 0x0) {
-			odm_set_bb_reg(dm, 0xc04, (BIT(18)|BIT(21)), 0x0); 
-			odm_set_bb_reg(dm, 0xe04, (BIT(18)|BIT(21)), 0x0); 
+			odm_set_bb_reg(dm, 0xc04, (BIT(18)|BIT(21)), 0x0);
+			odm_set_bb_reg(dm, 0xe04, (BIT(18)|BIT(21)), 0x0);
 			if ((dm->rfe_type == 1) || (dm->rfe_type == 6) || (dm->rfe_type == 7) || (dm->rfe_type == 9)) {
 				odm_set_bb_reg(dm, 0x8cc, MASKDWORD, 0x08108000);
 				odm_set_bb_reg(dm, 0x8d8, BIT(19), 0x0);
@@ -1542,7 +1542,7 @@ config_phydm_switch_channel_8822b(
 	}
 
 	central_ch_8822b = central_ch;
-	
+
 	/* Errir handling for wrong HW setting due to wrong channel setting */
 	if (central_ch_8822b <= 14)
 		band_index = 1;
@@ -1960,7 +1960,7 @@ config_phydm_trx_mode_8822b(
 	/* Cannot shut down path-A, beacause synthesizer will be shut down when path-A is in shut down mode */
 	/* 3-wire setting */
 	/*0: shutdown, 1: standby, 2: TX, 3: RX */
-	
+
 	if ((tx_path | rx_path) & BB_PATH_A)
 		odm_set_bb_reg(dm, 0xc08, MASKLWORD, 0x3231);
 	else
@@ -1972,7 +1972,7 @@ config_phydm_trx_mode_8822b(
 		odm_set_bb_reg(dm, 0xe08, MASKLWORD, 0x1111);
 
 	/*[TX Antenna Setting] ==========================================*/
-	
+
 	/* Set TX antenna by Nsts */
 	odm_set_bb_reg(dm, 0x93c, (BIT(19) | BIT(18)), 0x3);
 	odm_set_bb_reg(dm, 0x80c, (BIT(29) | BIT(28)), 0x1);
@@ -2001,12 +2001,12 @@ config_phydm_trx_mode_8822b(
 	/* Tx2path for 1ss */
 	if (!((tx_path == BB_PATH_A) || (tx_path == BB_PATH_B))) {
 		if (is_tx2_path || *dm->mp_mode) {
-			
+
 			odm_set_bb_reg(dm, 0x93c, 0xfff00000, 0x043);	/* 2Tx for OFDM */
 			odm_set_bb_reg(dm, 0xa04, 0xf0000000, 0xc);	/* 2Tx for CCK */
 		}
 	}
-	
+
 	/*[RX Antenna Setting] ==========================================*/
 
 	odm_set_bb_reg(dm, 0xa2c, BIT(22), 0x0);	/*Disable MRC for CCK CCA */
@@ -2126,12 +2126,12 @@ config_phydm_parameter_init_8822b(
 #if (PHYDM_FW_API_FUNC_ENABLE_8822B == 1)
 	} else if (type == ODM_INIT_FW_SETTING) {
 		u8	h2c_content[4] = {0};
-		
+
 		h2c_content[0] = dm->rfe_type;
 		h2c_content[1] = dm->rf_type;
 		h2c_content[2] = dm->cut_version;
 		h2c_content[3] = (dm->tx_ant_status << 4) | dm->rx_ant_status;
-		
+
 		odm_fill_h2c_cmd(dm, PHYDM_H2C_FW_GENERAL_INIT, 4, h2c_content);
 #endif
 	} else {

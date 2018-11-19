@@ -83,7 +83,7 @@ phydm_auto_check_hang_engine_n(
 
 	if (atd_t->dbg_step == 0) {
 		pr_debug("dbg_step=0\n\n");
-		
+
 		/*Reset all packet counter*/
 		odm_set_bb_reg(dm, 0xf14, BIT(16), 1);
 		odm_set_bb_reg(dm, 0xf14, BIT(16), 0);
@@ -97,21 +97,21 @@ phydm_auto_check_hang_engine_n(
 		atd_t->ofdm_t_cnt = (u16)odm_get_bb_reg(dm, 0x9cc, MASKHWORD);
 		atd_t->ofdm_r_cnt = (u16)odm_get_bb_reg(dm, 0xf94, MASKLWORD);
 		atd_t->ofdm_crc_error_cnt = (u16)odm_get_bb_reg(dm, 0xf94, MASKHWORD);
-		
+
 		atd_t->cck_t_cnt = (u16)odm_get_bb_reg(dm, 0x9d0, MASKHWORD);;
 		atd_t->cck_r_cnt = (u16)odm_get_bb_reg(dm, 0xfa0, MASKHWORD);
-		atd_t->cck_crc_error_cnt = (u16)odm_get_bb_reg(dm, 0xf84, 0x3fff);	
+		atd_t->cck_crc_error_cnt = (u16)odm_get_bb_reg(dm, 0xf84, 0x3fff);
 
 
 		/*Check Debug Port*/
 		for (i = 0; i < DBGPORT_CHK_NUM; i++) {
-			
+
 			if (phydm_set_bb_dbg_port(dm, BB_DBGPORT_PRIORITY_3, (u32)atd_t->dbg_port_table[i])) {
 				atd_t->dbg_port_val[i] = phydm_get_bb_dbg_port_value(dm);
 				phydm_release_bb_dbg_port(dm);
 			}
 		}
-	
+
 	} else if (atd_t->dbg_step == 2)  {
 		pr_debug("dbg_step=2\n\n");
 
@@ -119,40 +119,40 @@ phydm_auto_check_hang_engine_n(
 		curr_ofdm_t_cnt = (u16)odm_get_bb_reg(dm, 0x9cc, MASKHWORD);
 		curr_ofdm_r_cnt = (u16)odm_get_bb_reg(dm, 0xf94, MASKLWORD);
 		curr_ofdm_crc_error_cnt = (u16)odm_get_bb_reg(dm, 0xf94, MASKHWORD);
-		
+
 		curr_cck_t_cnt = (u16)odm_get_bb_reg(dm, 0x9d0, MASKHWORD);;
 		curr_cck_r_cnt = (u16)odm_get_bb_reg(dm, 0xfa0, MASKHWORD);
-		curr_cck_crc_error_cnt = (u16)odm_get_bb_reg(dm, 0xf84, 0x3fff);	
+		curr_cck_crc_error_cnt = (u16)odm_get_bb_reg(dm, 0xf84, 0x3fff);
 
 		/*Check Debug Port*/
 		for (i = 0; i < DBGPORT_CHK_NUM; i++) {
-			
+
 			if (phydm_set_bb_dbg_port(dm, BB_DBGPORT_PRIORITY_3, (u32)atd_t->dbg_port_table[i])) {
 				curr_dbg_port_val[i] = phydm_get_bb_dbg_port_value(dm);
 				phydm_release_bb_dbg_port(dm);
 			}
 		}
-	
+
 		/*=== Make check hang decision ================================*/
 		pr_debug("Check Hang Decision\n\n");
 
 		/* ----- Check RF Register -----------------------------------*/
 		for (i = 0; i < dm->num_rf_path; i++) {
-		
+
 			rf_mode = (u8)odm_get_rf_reg(dm, i, 0x0, 0xf0000);
-				
+
 			pr_debug("RF0x0[%d] = 0x%x\n", i, rf_mode);
 
 			if (rf_mode > 3) {
 				pr_debug("Incorrect RF mode\n");
 				pr_debug("ReasonCode:RHN-1\n");
 
-				
+
 			}
 		}
 
 		value32_tmp = odm_get_rf_reg(dm, 0, 0xb0, 0xf0000);
-			
+
 		if (dm->support_ic_type == ODM_RTL8188E) {
 			if (value32_tmp != 0xff8c8) {
 				pr_debug("ReasonCode:RHN-3\n");
@@ -160,14 +160,14 @@ phydm_auto_check_hang_engine_n(
 		}
 
 		/* ----- Check BB Register -----------------------------------*/
-		
+
 		/*BB mode table*/
 		value32_tmp = odm_get_bb_reg(dm, 0x824, 0xe);
 		value32_tmp_2 = odm_get_bb_reg(dm, 0x82c, 0xe);
 		pr_debug("BB TX mode table {A, B}= {%d, %d}\n", value32_tmp, value32_tmp_2);
 
 		if ((value32_tmp > 3) || (value32_tmp_2 > 3)) {
-			
+
 			pr_debug("ReasonCode:RHN-2\n");
 		}
 
@@ -176,19 +176,19 @@ phydm_auto_check_hang_engine_n(
 		pr_debug("BB RX mode table {A, B}= {%d, %d}\n", value32_tmp, value32_tmp_2);
 
 		if ((value32_tmp > 3) || (value32_tmp_2 > 3)) {
-			
+
 			pr_debug("ReasonCode:RHN-2\n");
 		}
-		
+
 
 		/*BB HW Block*/
 		value32_tmp = odm_get_bb_reg(dm, 0x800, MASKDWORD);
-		
+
 		if (!(value32_tmp & BIT(24))) {
 			pr_debug("Reg0x800[24] = 0, CCK BLK is disabled\n");
 			pr_debug("ReasonCode: THN-3\n");
 		}
-		
+
 		if (!(value32_tmp & BIT(25))) {
 			pr_debug("Reg0x800[24] = 0, OFDM BLK is disabled\n");
 			pr_debug("ReasonCode:THN-3\n");
@@ -200,29 +200,29 @@ phydm_auto_check_hang_engine_n(
 		if (value32_tmp != 0) {
 			pr_debug("ReasonCode: THN-4\n");
 		}
-		
+
 
 		/* ----- Check Packet Counter --------------------------------*/
 		diff_ofdm_t_cnt = curr_ofdm_t_cnt - atd_t->ofdm_t_cnt;
 		diff_ofdm_r_cnt = curr_ofdm_r_cnt - atd_t->ofdm_r_cnt;
 		diff_ofdm_crc_error_cnt = curr_ofdm_crc_error_cnt - atd_t->ofdm_crc_error_cnt;
-		
+
 		diff_cck_t_cnt = curr_cck_t_cnt - atd_t->cck_t_cnt;
 		diff_cck_r_cnt = curr_cck_r_cnt - atd_t->cck_r_cnt;
 		diff_cck_crc_error_cnt = curr_cck_crc_error_cnt - atd_t->cck_crc_error_cnt;
 
-		pr_debug("OFDM[t=0~1] {TX, RX, CRC_error} = {%d, %d, %d}\n", 
+		pr_debug("OFDM[t=0~1] {TX, RX, CRC_error} = {%d, %d, %d}\n",
 			atd_t->ofdm_t_cnt, atd_t->ofdm_r_cnt, atd_t->ofdm_crc_error_cnt);
-		pr_debug("OFDM[t=1~2] {TX, RX, CRC_error} = {%d, %d, %d}\n", 
+		pr_debug("OFDM[t=1~2] {TX, RX, CRC_error} = {%d, %d, %d}\n",
 			curr_ofdm_t_cnt, curr_ofdm_r_cnt, curr_ofdm_crc_error_cnt);
-		pr_debug("OFDM_diff {TX, RX, CRC_error} = {%d, %d, %d}\n", 
+		pr_debug("OFDM_diff {TX, RX, CRC_error} = {%d, %d, %d}\n",
 			diff_ofdm_t_cnt, diff_ofdm_r_cnt, diff_ofdm_crc_error_cnt);
 
-		pr_debug("CCK[t=0~1] {TX, RX, CRC_error} = {%d, %d, %d}\n", 
+		pr_debug("CCK[t=0~1] {TX, RX, CRC_error} = {%d, %d, %d}\n",
 			atd_t->cck_t_cnt, atd_t->cck_r_cnt, atd_t->cck_crc_error_cnt);
-		pr_debug("CCK[t=1~2] {TX, RX, CRC_error} = {%d, %d, %d}\n", 
+		pr_debug("CCK[t=1~2] {TX, RX, CRC_error} = {%d, %d, %d}\n",
 			curr_cck_t_cnt, curr_cck_r_cnt, curr_cck_crc_error_cnt);
-		pr_debug("CCK_diff {TX, RX, CRC_error} = {%d, %d, %d}\n", 
+		pr_debug("CCK_diff {TX, RX, CRC_error} = {%d, %d, %d}\n",
 			diff_cck_t_cnt, diff_cck_r_cnt, diff_cck_crc_error_cnt);
 
 		/* ----- Check Dbg Port --------------------------------*/
@@ -233,7 +233,7 @@ phydm_auto_check_hang_engine_n(
 
 			if ((atd_t->dbg_port_table[i]) == 0) {
 				if (atd_t->dbg_port_val[i] == curr_dbg_port_val[i]) {
-					
+
 					pr_debug("BB state hang\n");
 					pr_debug("ReasonCode:\n");
 				}
@@ -253,31 +253,31 @@ phydm_auto_check_hang_engine_n(
 					if (dbgport_803.phy_tx_on)
 						pr_debug("Maybe TX Hang\n");
 					else if (dbgport_803.ofdm_cca_pp || dbgport_803.cck_cca_pp)
-						pr_debug("Maybe RX Hang\n");	
+						pr_debug("Maybe RX Hang\n");
 				}
 
 			} else if (atd_t->dbg_port_table[i] == 0x208) {
 				if ((atd_t->dbg_port_val[i] & BIT(30)) && (curr_dbg_port_val[i] & BIT(30))) {
-					
+
 					pr_debug("EDCCA Pause TX\n");
 					pr_debug("ReasonCode: THN-2\n");
 				}
 
 			} else if (atd_t->dbg_port_table[i] == 0xab0) {
-				if (((atd_t->dbg_port_val[i] & 0xffffff) == 0) || 
+				if (((atd_t->dbg_port_val[i] & 0xffffff) == 0) ||
 					((curr_dbg_port_val[i] & 0xffffff) == 0)) {
-					
+
 					pr_debug("Wrong L-SIG formate\n");
 					pr_debug("ReasonCode: THN-1\n");
 				}
 			}
 		}
-		
+
 		phydm_check_hang_reset(dm);
 	}
 
 	atd_t->dbg_step++;
-	
+
 }
 
 void
@@ -297,18 +297,18 @@ phydm_bb_auto_check_hang_start_n(
 	if (dm->support_ic_type & ODM_IC_11AC_SERIES)
 		return;
 
-	PDM_SNPF(out_len, used, output + used, out_len - used, 
+	PDM_SNPF(out_len, used, output + used, out_len - used,
 		       "PHYDM auto check hang (N-series) is started, Please check the system log\n");
 
 	dm->debug_components |= ODM_COMP_API;
 	atd_t->auto_dbg_type = AUTO_DBG_CHECK_HANG;
 	atd_t->dbg_step = 0;
-	
+
 
 	phydm_pause_dm_watchdog(dm, PHYDM_PAUSE);
 
 
-	
+
 	*_used = used;
 	*_out_len = out_len;
 }
@@ -336,7 +336,7 @@ phydm_bb_rx_hang_info_n(
 	*_out_len = out_len;
 }
 
-#endif	
+#endif
 
 #if (ODM_IC_11AC_SERIES_SUPPORT == 1)
 void
@@ -602,7 +602,7 @@ phydm_auto_dbg_console(
 				#endif
 			}
 		} else if (var1[1] == 2) {
-		
+
 			if (dm->support_ic_type & ODM_IC_11AC_SERIES) {
 				PDM_SNPF(out_len, used, output + used,
 					       out_len - used,
@@ -617,7 +617,7 @@ phydm_auto_dbg_console(
 				#endif
 			}
 		}
-	} 
+	}
 
 	*_used = used;
 	*_out_len = out_len;
@@ -640,7 +640,7 @@ phydm_auto_dbg_engine(
 		return;
 
 	pr_debug("%s ======>\n", __func__);
-	
+
 	if (atd_t->auto_dbg_type == AUTO_DBG_CHECK_HANG) {
 		if (dm->support_ic_type & ODM_IC_11AC_SERIES) {
 			pr_debug("Not Support\n");
@@ -653,7 +653,7 @@ phydm_auto_dbg_engine(
 		}
 
 	} else if (atd_t->auto_dbg_type == AUTO_DBG_CHECK_RA) {
-	
+
 		pr_debug("Not Support\n");
 
 	}

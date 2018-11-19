@@ -986,14 +986,14 @@ phydm_c2H_content_parsing(
 #endif
 	u8	extend_c2h_sub_id = 0;
 	u8	find_c2h_cmd = true;
-	
+
 	if ((c2h_cmd_len > 12) || (c2h_cmd_len == 0)) {
 		pr_debug("[Warning] Error C2H ID=%d, len=%d\n", c2h_cmd_id, c2h_cmd_len);
-		
+
 		find_c2h_cmd = false;
 		return find_c2h_cmd;
 	}
-	
+
 	switch (c2h_cmd_id) {
 	case PHYDM_C2H_DBG:
 		phydm_fw_trace_handler(dm, tmp_buf, c2h_cmd_len);
@@ -1221,7 +1221,7 @@ odm_iq_calibrate_by_fw(
 
 #if (DM_ODM_SUPPORT_TYPE & ODM_WIN)
 	struct _ADAPTER *adapter = (PADAPTER)dm->adapter;
-	
+
 	if (HAL_MAC_FWIQK_Trigger(&GET_HAL_MAC_INFO(adapter), clear, segment) == 0)
 		iqk_result = HAL_STATUS_SUCCESS;
 #elif (DM_ODM_SUPPORT_TYPE & ODM_CE)
@@ -1294,7 +1294,7 @@ phydm_add_interrupt_mask_handler(
 	#if IS_EXIST_PCI || IS_EXIST_EMBEDDED
 	GET_HAL_INTERFACE(priv)->AddInterruptMaskHandler(priv, interrupt_type);
 	#endif
-	
+
 #elif (DM_ODM_SUPPORT_TYPE == ODM_CE)
 #endif
 }
@@ -1378,7 +1378,7 @@ phydm_get_txbf_en(
 		dm_bdc_table->num_txbfee_client++;
 	} else
 		dm_bdc_table->w_bfee_client[i] = false; /* AP act as BFer */
-	
+
 	if (beamform_cap & (BEAMFORMEE_CAP_HT_EXPLICIT | BEAMFORMEE_CAP_VHT_SU)) {
 		dm_bdc_table->w_bfer_client[i] = true; /* AP act as BFee */
 		dm_bdc_table->num_txbfer_client++;

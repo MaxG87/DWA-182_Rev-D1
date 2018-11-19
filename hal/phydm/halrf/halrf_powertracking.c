@@ -59,7 +59,7 @@ odm_check_power_status(
 	}
 #endif
 	return	true;
-	
+
 }
 
 #if (DM_ODM_SUPPORT_TYPE & (ODM_WIN | ODM_CE))

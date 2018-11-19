@@ -39,7 +39,7 @@ void phydm_pow_train_init(
 	void	*adapter = dm->adapter;
 	PMGNT_INFO			mgnt_info = &((PADAPTER)adapter)->MgntInfo;
 	HAL_DATA_TYPE		*hal_data = GET_HAL_DATA((PADAPTER)adapter);
-	/* This is for power training init @ 11N serious */	
+	/* This is for power training init @ 11N serious */
 	#if DEV_BUS_TYPE == RT_USB_INTERFACE
 	if (RT_GetInterfaceSelection((PADAPTER)adapter) == INTF_SEL1_USB_High_Power) {
 		odm_dynamic_tx_power_save_power_index(dm);
@@ -150,7 +150,7 @@ phydm_check_rates(
 	}
 #endif
 
-	
+
 	if (rate_idx >= 64)
 		bitmap_result = BIT(rate_idx-64) & check_rate_bitmap2;
 	else if (rate_idx >= 32)
@@ -178,12 +178,12 @@ phydm_check_paths(
 
 
 #if (RTL8197F_SUPPORT == 1)
-	if (dm->support_ic_type & ODM_RTL8197F) 
+	if (dm->support_ic_type & ODM_RTL8197F)
 		max_path = RF_PATH_B;
 #endif
 
 #if (RTL8821C_SUPPORT == 1)
-	if (dm->support_ic_type & ODM_RTL8821C) 
+	if (dm->support_ic_type & ODM_RTL8821C)
 		max_path = RF_PATH_A;
 #endif
 	return max_path;
@@ -211,7 +211,7 @@ phydm_search_min_power_index(
 				if (gain_index < min_gain_index)
 					min_gain_index = gain_index;
 			}
-	
+
 	return min_gain_index;
 }
 
@@ -291,7 +291,7 @@ phydm_dtp_fill_cmninfo(
 		dtp->dyn_tx_power = PHYDM_OFFSET_MINUS_3DB;
 	else
 		dtp->dyn_tx_power = PHYDM_OFFSET_ZERO;
-	
+
 }
 
 void

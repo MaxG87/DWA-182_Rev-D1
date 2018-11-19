@@ -131,9 +131,9 @@ hal_txbf_8814a_get_tx_rate(
 	macid = (u8)entry->mac_id;
 
 	sta = dm->phydm_sta_info[macid];
-	
+
 	if (is_sta_active(sta)) {
-		
+
 		data_rate = (sta->ra_info.curr_tx_rate) & 0x7f;	/*Bit7 indicates SGI*/
 		beam_info->tx_bf_data_rate = data_rate;
 	}

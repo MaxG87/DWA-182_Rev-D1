@@ -29,7 +29,7 @@
 
 #include "mp_precomp.h"
 #include "phydm_precomp.h"
- 
+
 #ifdef PHYDM_SUPPORT_RSSI_MONITOR
 
 #ifdef PHYDM_3RD_REFORM_RSSI_MONOTOR
@@ -54,7 +54,7 @@ phydm_rssi_monitor_h2c(
 		PHYDM_DBG(dm, DBG_RSSI_MNTR, "[Warning] %s invalid sta_info\n", __func__);
 		return;
 	}
-	
+
 	PHYDM_DBG(dm, DBG_RSSI_MNTR, "%s ======>\n", __func__);
 	PHYDM_DBG(dm, DBG_RSSI_MNTR, "MACID=%d\n", sta->mac_id);
 
@@ -90,7 +90,7 @@ phydm_rssi_monitor_h2c(
 	if (dm->support_ic_type == ODM_RTL8188E)
 		odm_ra_set_rssi_8188e(dm, (u8)(sta->mac_id & 0xFF), sta->rssi_stat.rssi & 0x7F);
 	else
-	#endif 
+	#endif
 	{
 		odm_fill_h2c_cmd(dm, ODM_H2C_RSSI_REPORT, H2C_MAX_LENGTH, h2c_val);
 	}
@@ -374,7 +374,7 @@ odm_rssi_monitor_check_mp(
 
 			odm_fill_h2c_cmd(dm, ODM_H2C_RSSI_REPORT, cmdlen, h2c_parameter);
 		}
-	
+
 	} else
 		PlatformEFIOWrite1Byte(adapter, 0x4fe, (u8)GET_DEFAULT_RSSI(mgnt_info));
 

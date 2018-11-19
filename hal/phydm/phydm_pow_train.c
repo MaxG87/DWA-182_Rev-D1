@@ -69,14 +69,14 @@ phydm_update_power_training_state(
 	PHYDM_DBG(dm, DBG_PWR_TRAIN, "%s ======>\n", __FUNCTION__);
 
 	if (pow_train_t->force_power_training_state == DISABLE_POW_TRAIN) {
-		
+
 		dm->is_disable_power_training = true;
 		phydm_reset_pt_para(dm);
 		PHYDM_DBG(dm, DBG_PWR_TRAIN, "Disable PT\n");
 		return;
 
 	} else if (pow_train_t->force_power_training_state == ENABLE_POW_TRAIN) {
-	
+
 		dm->is_disable_power_training = false;
 		phydm_reset_pt_para(dm);
 		PHYDM_DBG(dm, DBG_PWR_TRAIN, "Enable PT\n");
@@ -129,7 +129,7 @@ phydm_update_power_training_state(
 
 		PHYDM_DBG(dm, DBG_PWR_TRAIN, "num_qry_phy_status_ofdm = %d, num_qry_phy_status_cck = %d\n",
 			dm->phy_dbg_info.num_qry_phy_status_ofdm, dm->phy_dbg_info.num_qry_phy_status_cck);
-		
+
 		PHYDM_DBG(dm, DBG_PWR_TRAIN, "pt_score_tmp = %d\n", pt_score_tmp);
 		PHYDM_DBG(dm, DBG_PWR_TRAIN, "pt_score_tmp = 0(DISABLE), 1(KEEP), 2(ENABLE)\n");
 
@@ -141,12 +141,12 @@ phydm_update_power_training_state(
 
 		/* mode decision */
 		if (pt_score_tmp == ENABLE_PT_SCORE) {
-			
+
 			dm->is_disable_power_training = false;
 			PHYDM_DBG(dm, DBG_PWR_TRAIN, "Enable power training under dynamic.\n");
-			
+
 		} else if (pt_score_tmp == DISABLE_PT_SCORE) {
-		
+
 			dm->is_disable_power_training = true;
 			PHYDM_DBG(dm, DBG_PWR_TRAIN, "Disable PT due to noisy.\n");
 		}
@@ -157,7 +157,7 @@ phydm_update_power_training_state(
 		dm->phy_dbg_info.num_qry_phy_status_ofdm = 0;
 		dm->phy_dbg_info.num_qry_phy_status_cck = 0;
 	} else {
-	
+
 		dm->is_disable_power_training = true;
 		phydm_reset_pt_para(dm);
 
@@ -191,7 +191,7 @@ phydm_pow_train_debug(
 			       "1: Enable PT\n");
 		PDM_SNPF(out_len, used, output + used, out_len - used,
 			       "2: Disable PT\n");
-		
+
 	} else {
 		for (i = 0; i < 10; i++) {
 			if (input[i + 1]) {
@@ -214,7 +214,7 @@ phydm_pow_train_debug(
 		} else {
 			PDM_SNPF(out_len, used, output + used,
 				       out_len - used, "Set Error\n");
-		}		
+		}
 	}
 
 	*_used = used;

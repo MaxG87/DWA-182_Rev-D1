@@ -67,7 +67,7 @@ void do_iqk_8822b(
 {
 	struct dm_struct	*dm = (struct dm_struct *)dm_void;
 	struct dm_iqk_info	*iqk_info = &dm->IQK_info;
-	
+
 	dm->rf_calibrate_info.thermal_value_iqk = thermal_value;
 	halrf_segment_iqk_trigger(dm, true, iqk_info->segment_iqk);
 }
@@ -357,7 +357,7 @@ _iqk_restore_rf_8822b(
 	/*0xdf[4]=0*/
 	_iqk_rf_set_check(dm, RF_PATH_A, 0xdf, RF_backup[0][RF_PATH_A] & (~BIT(4)));
 	_iqk_rf_set_check(dm, RF_PATH_B, 0xdf, RF_backup[0][RF_PATH_B] & (~BIT(4)));
-	
+
 	/*odm_set_rf_reg(dm, RF_PATH_A, 0xdf, RFREGOFFSETMASK, RF_backup[0][RF_PATH_A] & (~BIT(4)));*/
 	/*odm_set_rf_reg(dm, RF_PATH_B, 0xdf, RFREGOFFSETMASK, RF_backup[0][RF_PATH_B] & (~BIT(4)));*/
 
@@ -414,7 +414,7 @@ _iqk_backup_iqk_8822b(
 			iqk_info->lok_idac[0][path] = odm_get_rf_reg(dm, (enum rf_path)path, 0x58, RFREGOFFSETMASK);
 		break;
 	case 2:	/*TXIQK backup*/
-	case 3: /*RXIQK backup*/	
+	case 3: /*RXIQK backup*/
 		phydm_get_iqk_cfir(dm, (step-2), path, false);
 		break;
 	}
@@ -971,7 +971,7 @@ _iqk_one_shot_8822b(
 	if (idx == TXIQK) {
 		if (fail)
 			odm_set_bb_reg(dm, iqk_apply[path], BIT(0), 0x0);
-		else	
+		else
 			_iqk_backup_iqk_8822b(dm, 0x2, path);
 	}
 
@@ -1303,7 +1303,7 @@ _iqk_rximr_rxk1_test_8822b(
 	IQK_CMD = 0xf8000208 | (1 << (path + 4));
 	odm_write_4byte(dm, 0x1b00, IQK_CMD);
 	odm_write_4byte(dm, 0x1b00, IQK_CMD + 0x1);
-	
+
 	ODM_delay_ms(GS_delay_8822B);
 	fail = _iqk_check_cal_8822b(dm, path, 0x1);
 	return fail;
@@ -1561,7 +1561,7 @@ _iqk_rximr_test_8822b(
 					for (i = 0; i < imr_limit; i++) {
 						if (side ==0)
 							tone_index = 0xff8 -(i<<4);
-						else							
+						else
 							tone_index = 0x08 | (i<<4);
 						while (count < 3) {
 							_iqk_rxk1_setting_8822b(dm, path);
@@ -1575,14 +1575,14 @@ _iqk_rximr_test_8822b(
 									PHYDM_DBG(dm, ODM_COMP_CALIBRATION,"[IQK]path = %x, toneindex = %x rxk1 fail\n", path, tone_index);
 								}
 							} else {
-								odm_write_4byte(dm, 0x1b00, 0xf8000008 | path << 1);						
+								odm_write_4byte(dm, 0x1b00, 0xf8000008 | path << 1);
 								odm_write_4byte(dm, 0x1b1c, 0xa2193c32);
 								odm_write_4byte(dm, 0x1b14, 0xe5);
 								odm_write_4byte(dm, 0x1b14, 0x0);
 								temp1b38[side][i] = odm_read_4byte(dm, 0x1b38);
 								PHYDM_DBG(dm, ODM_COMP_CALIBRATION,"[IQK]path = 0x%x, tone_idx = 0x%x, tmp1b38 = 0x%x\n", path, tone_index, temp1b38[side][i]);
 								break;
-							}				
+							}
 						}
 					}
 				}
@@ -1592,7 +1592,7 @@ _iqk_rximr_test_8822b(
 					for (i = 0x0; i < imr_limit; i++) {
 						if (side ==0)
 							tone_index = 0xff8 -(i<<4);
-						else							
+						else
 							tone_index = 0x08 | (i<<4);
 						_iqk_rxk2_setting_8822b(dm, path, false);
 						imr_result = _iqk_rximr_selfcheck_8822b(dm, tone_index, path, temp1b38[side][i]);
@@ -1721,9 +1721,9 @@ _phy_iq_calibrate_by_fw_8822b(
 )
 {
 	struct dm_struct	*dm = (struct dm_struct *)dm_void;
-	struct dm_iqk_info	*iqk_info = &dm->IQK_info;	
+	struct dm_iqk_info	*iqk_info = &dm->IQK_info;
 	enum hal_status		status = HAL_STATUS_FAILURE;
-	
+
 	if (*dm->mp_mode)
 		clear = 0x1;
 //	else if (dm->is_linked)

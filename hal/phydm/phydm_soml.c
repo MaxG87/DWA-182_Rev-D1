@@ -46,7 +46,7 @@ phydm_dynamicsoftmletting(
 
 			if (true == dm->bsomlenabled) {
 				PHYDM_DBG(dm, ODM_COMP_API, "PHYDM_DynamicSoftMLSetting(): SoML has been enable, skip dynamic SoML switch\n");
-				return; 		
+				return;
 			}
 
 			ret_val = odm_get_bb_reg(dm, 0xf8c, MASKBYTE0);
@@ -811,7 +811,7 @@ phydm_stop_adaptive_soml(
 	PHYDM_DBG(dm, DBG_ADPTV_SOML, "[%s][Return!!!]  Stop Adaptive SOML\n", __func__);
 	dm->support_ability &= ~ODM_BB_ADAPTIVE_SOML;
 	phydm_soml_on_off(dm, SOML_ON);
-	
+
 #endif
 }
 
@@ -822,7 +822,7 @@ phydm_adaptive_soml_para_set(
 	u8		intvl,
 	u8		period,
 	u8		delay_time
-	
+
 )
 {
 #ifdef CONFIG_ADAPTIVE_SOML
@@ -842,7 +842,7 @@ phydm_init_soft_ml_setting(
 )
 {
 	struct dm_struct		*dm = (struct dm_struct *)dm_void;
-	
+
 #if (RTL8822B_SUPPORT == 1)
 	if (*dm->mp_mode == false) {
 		if (dm->support_ic_type & ODM_RTL8822B) {

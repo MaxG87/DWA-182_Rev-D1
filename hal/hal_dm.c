@@ -1144,15 +1144,15 @@ void rtw_dyn_soml_config(_adapter *adapter)
 		RTW_INFO("dyn_soml_en = 1\n");
 	} else {
 		if (adapter->registrypriv.dyn_soml_en == 2) {
-			rtw_dyn_soml_para_set(adapter, 
-				adapter->registrypriv.dyn_soml_train_num, 
-				adapter->registrypriv.dyn_soml_interval, 
+			rtw_dyn_soml_para_set(adapter,
+				adapter->registrypriv.dyn_soml_train_num,
+				adapter->registrypriv.dyn_soml_interval,
 				adapter->registrypriv.dyn_soml_period,
 				adapter->registrypriv.dyn_soml_delay);
 			RTW_INFO("dyn_soml_en = 2\n");
 			RTW_INFO("dyn_soml_en, param = %d, %d, %d, %d\n",
 				adapter->registrypriv.dyn_soml_train_num,
-				adapter->registrypriv.dyn_soml_interval, 
+				adapter->registrypriv.dyn_soml_interval,
 				adapter->registrypriv.dyn_soml_period,
 				adapter->registrypriv.dyn_soml_delay);
 		} else if (adapter->registrypriv.dyn_soml_en == 0) {

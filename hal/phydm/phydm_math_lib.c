@@ -82,7 +82,7 @@ odm_sign_conversion(
 {
 	if (value & BIT(total_bit - 1))
 		value -= BIT(total_bit);
-	
+
 	return value;
 }
 

@@ -1908,7 +1908,7 @@ void halbtc8822b1ant_coex_table_with_type(IN struct btc_coexist *btcoexist,
 	case 26:
 		halbtc8822b1ant_coex_table(btcoexist, force_exec,
 						0xffff55ff, 0xaaaaaaaa, break_table,
-						select_table);	
+						select_table);
 	default:
 		break;
 	}
@@ -2332,7 +2332,7 @@ void halbtc8822b1ant_ps_tdma(IN struct btc_coexist *btcoexist,
 		case 37:
 			halbtc8822b1ant_set_fw_pstdma(btcoexist,
 					      0x61, 0x3c, 0x03, 0x11, 0x10);
-			break;	
+			break;
 		case 50:
 			halbtc8822b1ant_set_fw_pstdma(btcoexist,
 					      0x51, 0x4a, 0x3, 0x10, 0x10);
@@ -5311,7 +5311,7 @@ void ex_halbtc8822b1ant_display_coex_info(IN struct btc_coexist *btcoexist)
 		if (coex_sta->bt_coex_supported_feature == 0)
 			btcoexist->btc_get(btcoexist, BTC_GET_U4_SUPPORTED_FEATURE,
 					   &coex_sta->bt_coex_supported_feature);
-		
+
 		if ((coex_sta->bt_coex_supported_version == 0) ||
 			(coex_sta->bt_coex_supported_version == 0xffff))
 			btcoexist->btc_get(btcoexist, BTC_GET_U4_SUPPORTED_VERSION,

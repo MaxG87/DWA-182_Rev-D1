@@ -860,12 +860,12 @@ sint recv_bcast_pn_decache(union recv_frame *precv_frame)
 	u8 key_id;
 
 	if ((pattrib->encrypt == _AES_) &&
-		(check_fwstate(pmlmepriv, WIFI_STATION_STATE) == _TRUE)) {		
+		(check_fwstate(pmlmepriv, WIFI_STATION_STATE) == _TRUE)) {
 
 		tmp_iv_hdr = le64_to_cpu(*(u64*)(pdata + pattrib->hdrlen));
 		key_id = CCMPH_2_KEYID(tmp_iv_hdr);
 		pkt_pn = CCMPH_2_PN(tmp_iv_hdr);
-	
+
 		curr_pn = le64_to_cpu(*(u64*)psecuritypriv->iv_seq[key_id]);
 		curr_pn &= 0x0000ffffffffffff;
 
@@ -1770,7 +1770,7 @@ static sint validate_mgmt_protect(_adapter *adapter, union recv_frame *precv_fra
 
 		if (subtype == WIFI_ACTION)
 			category = *(ptr + sizeof(struct rtw_ieee80211_hdr_3addr));
-	
+
 		if (is_bmc) {
 			/* broadcast cases */
 			if (subtype == WIFI_ACTION) {

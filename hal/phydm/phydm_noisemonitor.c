@@ -418,7 +418,7 @@ phydm_noisy_detection(
 	score_smooth = (total_cca_cnt >= 300) ? ((dm->noisy_decision_smooth + 3) >> 3) : 0;
 
 	dm->noisy_decision = (score_smooth >= 3) ? 1 : 0;
-	
+
 	PHYDM_DBG(dm, DBG_ENV_MNTR,
 		"[NoisyDetection] CCA_cnt=%d,FA_cnt=%d, noisy_dec_smooth=%d, score=%d, score_smooth=%d, noisy_dec=%d\n",
 		total_cca_cnt, total_fa_cnt, dm->noisy_decision_smooth, score, score_smooth, dm->noisy_decision);

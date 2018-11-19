@@ -49,12 +49,12 @@ phydm_dig_up_bound_lmt_en(
 		(!dm->adaptivity_enable)
 	) {
 		adaptivity->igi_up_bound_lmt_cnt = 0;
-		adaptivity->igi_lmt_en = false;	
+		adaptivity->igi_lmt_en = false;
 		return;
 	}
 
 	if (dm->total_tp > 1) {
-		adaptivity->igi_lmt_en = true;			
+		adaptivity->igi_lmt_en = true;
 		adaptivity->igi_up_bound_lmt_cnt = adaptivity->igi_up_bound_lmt_val;
 		PHYDM_DBG(dm, DBG_ADPTVTY, "TP >1, Start limit IGI upper bound\n");
 	} else {
@@ -79,7 +79,7 @@ phydm_check_adaptivity(
 		dm->adaptivity_enable = false;
 		return;
 	}
-	
+
 #if (DM_ODM_SUPPORT_TYPE == ODM_WIN)
 	if (dm->ap_total_num > adaptivity->ap_num_th) {
 		dm->adaptivity_enable = false;
@@ -96,7 +96,7 @@ phydm_check_adaptivity(
 		return;
 	}
 #endif
-	
+
 	dm->adaptivity_enable = true;
 }
 
@@ -579,7 +579,7 @@ phydm_adaptivity_init(
 	/*phydm_set_edcca_threshold_api(dm, dig_t->cur_ig_value);*/
 
 	dm->adaptivity_flag = (dm->support_ic_type & ODM_IC_GAIN_IDX_EDCCA) ? false : true;
-	
+
 #if (DM_ODM_SUPPORT_TYPE == ODM_AP)
 	adaptivity->igi_up_bound_lmt_val = 180;
 #else
@@ -633,7 +633,7 @@ phydm_adaptivity(
 		if (dm->soft_ap_mode != NULL) {
 			if (*dm->soft_ap_mode != 0 && (dm->soft_ap_special_setting & BIT(0)))
 				disable_ap_adapt_setting = true;
-			PHYDM_DBG(dm, DBG_ADPTVTY, "soft_ap_setting = %x, soft_ap = %d, dis_ap_adapt = %d\n", 
+			PHYDM_DBG(dm, DBG_ADPTVTY, "soft_ap_setting = %x, soft_ap = %d, dis_ap_adapt = %d\n",
 				dm->soft_ap_special_setting, *dm->soft_ap_mode, disable_ap_adapt_setting);
 		}
 		if (phydm_check_channel_plan(dm) || (dm->ap_total_num > adaptivity->ap_num_th) || disable_ap_adapt_setting) {

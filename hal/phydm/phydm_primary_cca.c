@@ -34,7 +34,7 @@ void
 phydm_write_dynamic_cca(
 	void			*dm_void,
 	u8			curr_mf_state
-	
+
 )
 {
 	struct dm_struct		*dm = (struct dm_struct *)dm_void;
@@ -83,7 +83,7 @@ phydm_primary_cca_11n(
 
 	if (!(dm->support_ability & ODM_BB_PRIMARY_CCA))
 		return;
-	
+
 	if (!dm->is_linked) { /* is_linked==False */
 		PHYDM_DBG(dm, DBG_PRI_CCA, "[PriCCA][No Link!!!]\n");
 
@@ -92,32 +92,32 @@ phydm_primary_cca_11n(
 			primary_cca->pri_cca_is_become_linked = dm->is_linked;
 		}
 		return;
-		
+
 	} else {
 		if (primary_cca->pri_cca_is_become_linked == false) {
 			PHYDM_DBG(dm, DBG_PRI_CCA, "[PriCCA][Linked !!!]\n");
 			primary_cca->pri_cca_is_become_linked = dm->is_linked;
 		}
 	}
-	
+
 	if (curr_bw != primary_cca->pre_bw) {
 		PHYDM_DBG(dm, DBG_PRI_CCA, "[Primary CCA] start ==>\n");
 		primary_cca->pre_bw = curr_bw;
 
 		if (curr_bw == CHANNEL_WIDTH_40) {
-			
+
 			if (*dm->sec_ch_offset == SECOND_CH_AT_LSB) {/* Primary CH @ upper sideband*/
-				
+
 				PHYDM_DBG(dm, DBG_PRI_CCA, "BW40M, Primary CH at USB\n");
 				phydm_write_dynamic_cca(dm, MF_USC);
-				
+
 			} else {	/*Primary CH @ lower sideband*/
-				
+
 				PHYDM_DBG(dm, DBG_PRI_CCA, "BW40M, Primary CH at LSB\n");
 				phydm_write_dynamic_cca(dm, MF_LSC);
 			}
 		} else {
-		
+
 			PHYDM_DBG(dm, DBG_PRI_CCA, "Not BW40M, USB + LSB\n");
 			phydm_primary_cca_reset(dm);
 		}
@@ -160,7 +160,7 @@ odm_dynamic_primary_cca_8188e(
 	#if (DM_ODM_SUPPORT_TYPE == ODM_WIN) || (DM_ODM_SUPPORT_TYPE == ODM_CE)
 		sec_ch_offset = sec_ch_offset % 2 + 1; /* NIC's definition is reverse to AP   1:secondary below,  2: secondary above */
 	#endif
-	
+
 	PHYDM_DBG(dm, DBG_PRI_CCA, "Second CH Offset = %d\n", sec_ch_offset);
 
 	/* 3 Check Current WLAN Traffic */
@@ -442,7 +442,7 @@ odm_dynamic_primary_cca_mp_8192e(
 	PHYDM_DBG(dm, DBG_PRI_CCA, "92E: BW_LSC=%d\n", bw_lsc_cnt);
 	sec_ch_offset = *(dm->sec_ch_offset);		/* NIC: 2: sec is below,  1: sec is above */
 
-	
+
 	if (IsAPModeExist(adapter)) {
 		phydm_write_dynamic_cca(dm, MF_USC_LSC);
 		return;
@@ -592,7 +592,7 @@ odm_dynamic_primary_cca_ap_8192e(
 	}
 
 	if (*(dm->band_width) == CHANNEL_WIDTH_40) {
-		
+
 		if (primary_cca->pri_cca_flag == 0) {
 			if (is_connected) {
 				if (STA_BW == CHANNEL_WIDTH_20) { /* 2 STA BW=20M */
@@ -675,7 +675,7 @@ odm_dynamic_primary_cca_dup_rts(
 
 	return	primary_cca->dup_rts_flag;
 #else
-	return	0;	
+	return	0;
 #endif
 }
 
@@ -702,7 +702,7 @@ phydm_primary_cca_init(
 	#endif
 	primary_cca->mf_state = 0xff;
 	primary_cca->pre_bw = (enum channel_width)0xff;
-	
+
 	if (dm->support_ic_type & ODM_IC_11N_SERIES)
 		primary_cca->cca_th_40m_bkp = (u8)odm_get_bb_reg(dm, 0xc84, 0xf0000000);
 #endif

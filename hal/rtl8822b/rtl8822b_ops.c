@@ -1179,13 +1179,13 @@ static void set_opmode_port0(PADAPTER adapter, u8 mode)
 		rtw_write8(adapter, REG_CCK_CHECK_8822B, val8);
 
 #ifdef CONFIG_CONCURRENT_MODE
-		{	
+		{
 			/* Sync TSF from AP of STA interface to avoid tx bcn fail */
 			_adapter *iface;
 			struct dvobj_priv *dvobj = adapter_to_dvobj(adapter);
 			u8 i = 0;
 			u8 connect = _FALSE;
-			
+
 			for (i = 0; i < dvobj->iface_nums; i++) {
 				iface = dvobj->padapters[i];
 				if (!iface)
@@ -1383,7 +1383,7 @@ static void hw_var_set_bcn_func(PADAPTER adapter, u8 enable)
 		val8 |= BIT_EN_BCN_TRXRPT_V1_8822B;
 		rtw_write8(adapter, REG_FWHW_TXQ_CTRL_8822B, val8);
 
-		
+
 		switch (adapter->hw_port) {
 		case HW_PORT0:
 			val8 =  BIT_EN_BCN_FUNCTION_8822B | BIT_P0_EN_TXBCN_RPT_8822B;
@@ -3469,7 +3469,7 @@ void rtl8822b_fill_txdesc_mgnt_bf(struct xmit_frame *frame, u8 *desc)
 	/*SET_TX_DESC_MACID_8822B(desc, pattrib->mac_id);*/ /* ad-hoc mode */
 	/*SET_TX_DESC_G_ID_8822B(desc, 63);*/
 	/*
-	 * partial AID of 1st STA, at infrastructure mode, either SU or MU; 
+	 * partial AID of 1st STA, at infrastructure mode, either SU or MU;
 	 * MACID, at ad-hoc mode
 	 *
 	 * For WMAC to restore the received CSI report of STA1.

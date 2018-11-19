@@ -144,7 +144,7 @@ struct nhm_para_info {
 	enum nhm_application		nhm_app;
 	enum phydm_nhm_level 		nhm_lv;
 	u16				mntr_time;	/*0~262 unit ms*/
-	
+
 };
 
 struct clm_para_info {

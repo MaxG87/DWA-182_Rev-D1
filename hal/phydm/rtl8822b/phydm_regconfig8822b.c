@@ -54,7 +54,7 @@ odm_config_rf_reg_8822b(
 							RFREGOFFSETMASK,
 							rf_path,
 							100);
-		else {	
+		else {
 			phydm_set_reg_by_fw(dm,
 								PHYDM_HALMAC_CMD_RF_W,
 								reg_addr,
@@ -261,7 +261,7 @@ odm_config_bb_phy_8822b(
 									bitmask,
 									(enum rf_path)0,
 									delay_time);
-		} else 
+		} else
 			phydm_set_reg_by_fw(dm,
 								PHYDM_HALMAC_CMD_BB_W32,
 								addr,
@@ -289,7 +289,7 @@ odm_config_bb_phy_8822b(
 		else
 			odm_set_bb_reg(dm, addr, bitmask, data);
 	}
-	
+
 	PHYDM_DBG(dm, ODM_COMP_INIT, "===> config_bb: [PHY_REG] %08X %08X\n", addr, data);
 }
 

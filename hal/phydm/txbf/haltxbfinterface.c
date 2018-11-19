@@ -143,7 +143,7 @@ beamforming_get_report_frame(
 
 void
 construct_ht_ndpa_packet(
-	// 2017/11 MH PHYDM compile. But why need to use windows maco? 
+	// 2017/11 MH PHYDM compile. But why need to use windows maco?
 	// For all linux code, it should be useless?
 	//void				*adapter = dm->adapter;
 	ADAPTER				*adapter,
@@ -325,7 +325,7 @@ construct_vht_ndpa_packet(
 	u8					sequence = 0;
 	u8					*p_ndpa_frame = buffer;
 	struct _RT_NDPA_STA_INFO		sta_info;
-	// 2017/11 MH PHYDM compile. But why need to use windows maco? 
+	// 2017/11 MH PHYDM compile. But why need to use windows maco?
 	// For all linux code, it should be useless?
 	//void				*adapter = dm->adapter;
 	ADAPTER				*adapter = (PADAPTER)(dm->adapter);
@@ -338,8 +338,8 @@ construct_vht_ndpa_packet(
 	SET_80211_HDR_ADDRESS1(p_ndpa_frame, RA);
 	SET_80211_HDR_ADDRESS2(p_ndpa_frame, beamform_entry->my_mac_addr);
 
-	// 2017/11 MH PHYDM compile. But why need to use windows maco? 
-	// For all linux code, it should be useless?	
+	// 2017/11 MH PHYDM compile. But why need to use windows maco?
+	// For all linux code, it should be useless?
 	duration = 2 * a_SifsTime + 44;
 
 	if (BW == CHANNEL_WIDTH_80)

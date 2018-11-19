@@ -1709,11 +1709,11 @@ void hal_mpt_SetSingleToneTx(PADAPTER pAdapter, u8 bStart)
 			} else if (IS_HARDWARE_TYPE_8821C(pAdapter)) {
 				phy_set_bb_reg(pAdapter, rA_RFE_Pinmux_Jaguar, 0xF0F0, 0x707);  /* 0xCB0[[15:12, 7:4] = 0x707*/
 
-				if (pHalData->external_pa_5g) 
+				if (pHalData->external_pa_5g)
 				{
 					phy_set_bb_reg(pAdapter, rA_RFE_Pinmux_Jaguar + 4, 0xA00000, 0x1); /* 0xCB4[23, 21] = 0x1*/
 				}
-				else if (pHalData->ExternalPA_2G) 
+				else if (pHalData->ExternalPA_2G)
 				{
 					phy_set_bb_reg(pAdapter, rA_RFE_Pinmux_Jaguar + 4, 0xA00000, 0x1); /* 0xCB4[23, 21] = 0x1*/
 				}

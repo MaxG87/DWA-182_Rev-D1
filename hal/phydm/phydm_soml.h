@@ -243,7 +243,7 @@ phydm_adaptive_soml_para_set(
 	u8		intvl,
 	u8		period,
 	u8		delay_time
-	
+
 );
 
 void

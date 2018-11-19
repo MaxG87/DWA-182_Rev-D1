@@ -210,7 +210,7 @@ static int rtw_mesh_path_sel_frame_tx(enum rtw_mpath_frame_type mpath_action, u8
 				      const u8 *originator_addr, u32 originator_sn,
 				      u8 target_flags, const u8 *target,
 				      u32 target_sn, const u8 *da, u8 hopcount, u8 ttl,
-				      u32 lifetime, u32 metric, u32 preq_id, 
+				      u32 lifetime, u32 metric, u32 preq_id,
 				      _adapter *adapter)
 {
 	struct xmit_priv *pxmitpriv = &(adapter->xmitpriv);
@@ -390,7 +390,7 @@ int rtw_mesh_path_error_tx(_adapter *adapter,
 	dump_mgntframe(adapter, pmgntframe);
 
 	RTW_HWMP_DBG("TX PERR toward "MAC_FMT", ra = "MAC_FMT"\n", MAC_ARG(target), MAC_ARG(ra));
-	
+
 	return 0;
 }
 
@@ -616,7 +616,7 @@ void rtw_ieee80211s_update_metric(_adapter *adapter, u8 mac_id,
 	sta->metrics.total_pkt = total_pkt;
 
 	rtw_ewma_err_rate_add(&sta->metrics.err_rate, per);
-	if (rtw_ewma_err_rate_read(&sta->metrics.err_rate) > 
+	if (rtw_ewma_err_rate_read(&sta->metrics.err_rate) >
 			RTW_LINK_FAIL_THRESH)
 		rtw_mesh_plink_broken(sta);
 }

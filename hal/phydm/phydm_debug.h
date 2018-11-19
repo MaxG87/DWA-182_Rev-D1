@@ -81,7 +81,7 @@
 #define	TRY_DONE		16
 #define	RA_H2C			32
 #define	F_RATE_AP_RPT	64
-#define	DBC_FW_CLM	9		
+#define	DBC_FW_CLM	9
 
 /* -----------------------------------------------------------------------------
  * Define the tracing components

@@ -1645,7 +1645,7 @@ void halbtc8822b2ant_coex_table_with_type(IN struct btc_coexist *btcoexist,
 	case 14:
 		halbtc8822b2ant_coex_table(btcoexist, force_exec,
 			   0xffff55ff, 0xaaaaaaaa, break_table, select_table);
-		break;	
+		break;
 	default:
 		break;
 	}
@@ -3288,7 +3288,7 @@ void halbtc8822b2ant_action_a2dpsink(IN struct btc_coexist *btcoexist)
 	btcoexist->btc_get(btcoexist, BTC_GET_U1_AP_NUM,
 			   &coex_sta->scan_ap_num);
 	btcoexist->btc_get(btcoexist, BTC_GET_BL_WIFI_AP_MODE_ENABLE, &ap_enable);
-	
+
 	BTC_SPRINTF(trace_buf, BT_TMP_BUF_SIZE,
 		"############# [BTCoex],  scan_ap_num = %d, wl_noisy = %d\n",
 			coex_sta->scan_ap_num, coex_sta->wl_noisy_level);

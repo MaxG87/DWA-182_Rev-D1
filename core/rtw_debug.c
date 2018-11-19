@@ -1442,7 +1442,7 @@ int proc_get_survey_info(struct seq_file *m, void *v)
 			(ie_wpa2) ? "[WPA2]" : "",
 			(!ie_wpa && !ie_wpa && ie_cap & BIT(4)) ? "[WEP]" : "",
 			(ie_wps) ? "[WPS]" : "",
-			(pnetwork->network.InfrastructureMode == Ndis802_11IBSS) ? "[IBSS]" : 
+			(pnetwork->network.InfrastructureMode == Ndis802_11IBSS) ? "[IBSS]" :
 				(pnetwork->network.InfrastructureMode == Ndis802_11_mesh) ? "[MESH]" : "",
 			(ie_cap & BIT(0)) ? "[ESS]" : "",
 			(ie_p2p) ? "[P2P]" : "");
@@ -4491,7 +4491,7 @@ int proc_get_ps_info(struct seq_file *m, void *v)
 	return 0;
 }
 
-#ifdef CONFIG_WMMPS_STA	
+#ifdef CONFIG_WMMPS_STA
 int proc_get_wmmps_info(struct seq_file *m, void *v)
 {
 	struct net_device *dev = m->private;
@@ -4551,9 +4551,9 @@ ssize_t proc_set_wmmps_info(struct file *file, const char __user *buffer, size_t
 	if (buffer && !copy_from_user(tmp, buffer, count)) {
 
 		int num = sscanf(tmp, "%hhu %hhx", &uapsd_max_sp_len_setting, &uapsd_ac_setting);
-		
+
 		if (pregpriv) {
-			if (num >= 1){	
+			if (num >= 1){
 				pregpriv->uapsd_max_sp_len = uapsd_max_sp_len_setting;
 				RTW_INFO("uapsd_max_sp_len = %d\n", pregpriv->uapsd_max_sp_len);
 			}
@@ -4562,7 +4562,7 @@ ssize_t proc_set_wmmps_info(struct file *file, const char __user *buffer, size_t
 				pregpriv->uapsd_ac_enable = uapsd_ac_setting;
 				RTW_INFO("uapsd_ac_enable = 0x%02x\n", pregpriv->uapsd_ac_enable);
 			}
-		}	
+		}
 	}
 
 	return count;

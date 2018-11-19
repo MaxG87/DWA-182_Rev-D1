@@ -45,7 +45,7 @@ struct _DFS_STATISTICS {
 	u8			igi_pre;
 	u8			st_l2h_cur;
 	u16			fa_count_pre;
-	u16			fa_inc_hist[5];	
+	u16			fa_inc_hist[5];
 	u16			vht_crc_ok_cnt_pre;
 	u16			ht_crc_ok_cnt_pre;
 	u16			leg_crc_ok_cnt_pre;
@@ -53,7 +53,7 @@ struct _DFS_STATISTICS {
 	u16			long_pulse_cnt_pre;
 	u8			pwdb_th;
 	u8			pwdb_th_cur;
-	u8			pwdb_scalar_factor;	
+	u8			pwdb_scalar_factor;
 	u8			peak_th;
 	u8			short_pulse_cnt_th;
 	u8			long_pulse_cnt_th;
@@ -100,7 +100,7 @@ void phydm_dfs_parameter_init(void *dm_void);
 void phydm_dfs_debug(void *dm_void, u32 *const argv, u32 *_used, char *output, u32 *_out_len);
 #endif /* defined(CONFIG_PHYDM_DFS_MASTER) */
 
-boolean 
+boolean
 phydm_dfs_is_meteorology_channel(
 	void		*dm_void
 );

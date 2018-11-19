@@ -74,7 +74,7 @@ phydm_seq_sorting(
 	u8	seq_length
 );
 
-u32 
+u32
 odm_convert_to_db(
 	u32	 value
 );

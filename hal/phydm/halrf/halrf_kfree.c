@@ -361,7 +361,7 @@ phydm_get_power_trim_offset_8822b(
 		}
 
 		odm_efuse_one_byte_read(dm, PPG_BB_GAIN_5GL1_TXA_OFFSET, &pg_power, false);
-		
+
 		if (pg_power != 0xff) {
 			/*Path A*/
 			odm_efuse_one_byte_read(dm, PPG_BB_GAIN_5GL1_TXA_OFFSET, &pg_power, false);
@@ -386,7 +386,7 @@ phydm_get_power_trim_offset_8822b(
 			power_trim_info->bb_gain[4][1] = pg_power;
 			odm_efuse_one_byte_read(dm, PPG_BB_GAIN_5GH1_TXB_OFFSET, &pg_power, false);
 			power_trim_info->bb_gain[5][1] = pg_power;
-			
+
 			power_trim_info->flag |= KFREE_FLAG_ON_5G;
 			power_trim_info->flag |= KFREE_FLAG_ON;
 		}
@@ -482,7 +482,7 @@ phydm_get_pa_bias_offset_8822b(
 		/*paht a*/
 		odm_efuse_one_byte_read(dm, PPG_PA_BIAS_2G_TXA_OFFSET, &pg_pa_bias, false);
 		pg_pa_bias = pg_pa_bias & 0xf;
-		
+
 		if ((pg_pa_bias & BIT(0)) == 0)
 			tx_pa_bias[0] = (-1 * (pg_pa_bias >> 1));
 		else
@@ -491,7 +491,7 @@ phydm_get_pa_bias_offset_8822b(
 		/*paht b*/
 		odm_efuse_one_byte_read(dm, PPG_PA_BIAS_2G_TXB_OFFSET, &pg_pa_bias, false);
 		pg_pa_bias = pg_pa_bias & 0xf;
-		
+
 		if ((pg_pa_bias & BIT(0)) == 0)
 			tx_pa_bias[1] = (-1 * (pg_pa_bias >> 1));
 		else
@@ -574,21 +574,21 @@ void	*dm_void)
 	struct odm_power_trim_data	*power_trim_info = &(dm->power_trim_data);
 
 	u8 pg_therm = 0xff;
-	
+
 	odm_efuse_one_byte_read(dm, 0x0EF, &pg_therm, false);
-	
+
 	if (pg_therm != 0xff) {
 		pg_therm = pg_therm & 0x1f;
 		if ((pg_therm & BIT(0)) == 0)
 			power_trim_info->thermal = (-1 * (pg_therm >> 1));
 		else
 			power_trim_info->thermal = (pg_therm >> 1);
-	
+
 		power_trim_info->flag |= KFREE_FLAG_THERMAL_K_ON;
 	}
-	
+
 	ODM_RT_TRACE(dm, ODM_COMP_MP, ODM_DBG_LOUD, ("[kfree] 8710b thermal trim flag:0x%02x\n", power_trim_info->flag));
-	
+
 	if (power_trim_info->flag & KFREE_FLAG_THERMAL_K_ON)
 		ODM_RT_TRACE(dm, ODM_COMP_MP, ODM_DBG_LOUD, ("[kfree] 8710b thermal:%d\n", power_trim_info->thermal));
 
@@ -619,7 +619,7 @@ phydm_get_power_trim_offset_8710b(
 
 		ODM_RT_TRACE(dm, ODM_COMP_MP, ODM_DBG_LOUD, ("[kfree] 8710b power trim flag:0x%02x\n", power_trim_info->flag));
 
-		if (power_trim_info->flag & KFREE_FLAG_ON) 
+		if (power_trim_info->flag & KFREE_FLAG_ON)
 
 		ODM_RT_TRACE(dm, ODM_COMP_MP, ODM_DBG_LOUD, ("[kfree] 8710b power_trim_data->bb_gain[0][0]=0x%X\n",  power_trim_info->bb_gain[0][0]));
 
@@ -633,7 +633,7 @@ phydm_set_kfree_to_rf_8710b(
 {
 	struct dm_struct		*dm = (struct dm_struct *)dm_void;
 	struct dm_rf_calibration_struct	*cali_info = &dm->rf_calibrate_info;
-	
+
 	odm_set_rf_reg(dm, e_rf_path, 0x55, BIT(19), (data & BIT(0)));
 	odm_set_rf_reg(dm, e_rf_path, 0x55, (BIT(18) | BIT(17) | BIT(16) | BIT(15)), ((data & 0xf) >> 1));
 
