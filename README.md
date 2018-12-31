@@ -13,7 +13,7 @@ You can find the original source for this driver on [D-Link's download page for 
 # DKMS installation
 
 ```bash
-cd rtl88x2BU_WiFi_linux_v5.2.4.4_25643.20171212_COEX20171012-5044
+cd DWA-182_Rev-D1
 VER=$(cat ./version)
 sudo rsync -rvhP ./ /usr/src/rtl88x2bu-${VER}
 sudo dkms add -m rtl88x2bu -v ${VER}
