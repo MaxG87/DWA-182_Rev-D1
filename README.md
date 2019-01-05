@@ -16,7 +16,7 @@ You can find the original source for this driver on [D-Link's download page for 
 cd DWA-182_Rev-D1
 VER=$(cat ./version)
 sudo rsync --delete --exclude=.git -rvhP ./ /usr/src/rtl88x2bu-${VER}
-for action in add build essential
+for action in add build install
 do
   sudo dkms "${action}" -m rtl88x2bu -v ${VER}
 done
