@@ -2236,7 +2236,7 @@ endif
 
 obj-$(CONFIG_RTL8822BU) := $(MODULE_NAME).o
 
-else
+endif
 
 export CONFIG_RTL8822BU = m
 
@@ -2311,5 +2311,3 @@ clean:
 	rm -fr Module.symvers ; rm -fr Module.markers ; rm -fr modules.order
 	rm -fr *.mod.c *.mod *.o .*.cmd *.ko *~
 	rm -fr .tmp_versions
-endif
-
