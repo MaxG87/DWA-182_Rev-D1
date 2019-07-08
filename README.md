@@ -1,16 +1,25 @@
-Updated driver for rtl88x2bu wifi adaptors based on rtl88x2BU_WiFi_linux_v5.2.4.4_26334.20180126_COEX20171012-5044.
+# Driver for rtl88x2bu wifi adaptors
 
-Build confirmed on `Linux version 4.16.0-2-amd64 (debian-kernel@lists.debian.org) (gcc version 7.3.0 (Debian 7.3.0-19)) #1 SMP Debian 4.16.12-1 (2018-05-27)`
+Updated driver for rtl88x2bu wifi adaptors based on
+rtl88x2BU_WiFi_linux_v5.3.1_27678.20180430_COEX20180427-5959 originally
+downloaded from [D-Link's download page for the DWA-182 Rev
+D](https://support.dlink.com/ProductInfo.aspx?m=DWA-182).
 
-See http://www.wolfteck.com/2018/02/22/wsky_1200mbps_wireless_usb_wifi_adapter/ for all the hows and whys around the updates.
 
-# Fair warning...
+## Purpose of the repository
 
-Thanks to [MaxG87](https://github.com/cilynx/rtl88x2BU_WiFi_linux_v5.2.4.4_25643.20171212_COEX20171012-5044/issues/3), no more [scary provenance warning](https://github.com/cilynx/rtl88x2BU_WiFi_linux_v5.2.4.4_25643.20171212_COEX20171012-5044#fair-warning)! W00t.
+The purpose of this repository is to update the driver such that it can be
+compiled with recent versions of the Linux kernel on x86-64. The repository
+of [cylinx](https://github.com/cilynx/rtl88x2BU_WiFi_linux_v5.3.1_27678.20180430_COEX20180427-5959)
+does something very similar.
 
-You can find the original source for this driver on [D-Link's download page for the DWA-182 Rev D](https://support.dlink.com/ProductInfo.aspx?m=DWA-182).
+The main difference between this and cylinx' repositories are that this
+repository compiles with -O2 (and can compile with -O3), leading to few
+additional bugfixes and possibly some performance improvements. On the other
+hand, cylinx' repository seems to support some RasperryPi use cases.
 
-# DKMS installation
+
+## DKMS installation
 
 ```bash
 cd DWA-182_Rev-D1
