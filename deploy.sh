@@ -18,8 +18,12 @@ function ensure_root_permissions() {
     fi
 }
 
+function get_version() {
+    sed -En 's/PACKAGE_VERSION="(.*)"/\1/p' dkms.conf
+}
+
 function deploy_driver() {
-    VER="$(cat ./version)"
+    VER=$(get_version)
     sudo rsync --delete --exclude=.git -rvhP ./ "/usr/src/rtl88x2bu-${VER}"
     for action in add build install
     do
