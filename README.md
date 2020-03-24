@@ -18,16 +18,14 @@ repository compiles with -O2 (and can compile with -O3), leading to few
 additional bugfixes and possibly some performance improvements. On the other
 hand, cylinx' repository seems to support some RasperryPi use cases.
 
+## Simple Usage
+
+In order to make direct use of the driver it should suffice to build the driver
+with `make` and to load it with `insmod 88x2bu.ko`. This will allow you
+to use the driver directly without changing your system persistently.
 
 ## DKMS installation
 
-```bash
-cd DWA-182_Rev-D1
-VER=$(cat ./version)
-sudo rsync --delete --exclude=.git -rvhP ./ /usr/src/rtl88x2bu-${VER}
-for action in add build install
-do
-  sudo dkms "${action}" -m rtl88x2bu -v ${VER}
-done
-sudo modprobe 88x2bu
-```
+If you want to have the driver available at startup, it will you convenient to
+register it in DKMS. This can be done completely automatically with the script
+`deploy.sh`.
