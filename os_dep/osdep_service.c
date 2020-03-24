@@ -1808,6 +1808,20 @@ void rtw_yield_os(void)
 #endif
 }
 
+bool rtw_macaddr_is_larger(const u8 *a, const u8 *b)
+{
+	u32 va, vb;
+
+	va = be32_to_cpu(*((u32 *)a));
+	vb = be32_to_cpu(*((u32 *)b));
+	if (va > vb)
+		return 1;
+	else if (va < vb)
+		return 0;
+
+	return be16_to_cpu(*((u16 *)(a + 4))) > be16_to_cpu(*((u16 *)(b + 4)));
+}
+
 #define RTW_SUSPEND_LOCK_NAME "rtw_wifi"
 #define RTW_SUSPEND_TRAFFIC_LOCK_NAME "rtw_wifi_traffic"
 #define RTW_SUSPEND_RESUME_LOCK_NAME "rtw_wifi_resume"
@@ -2190,7 +2204,7 @@ static int isFileReadable(const char *path, u32 *sz)
     #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0))
 		set_fs(KERNEL_DS);
     #else
-		set_fs(get_ds());
+    set_fs(get_ds())
     #endif
 
 		if (1 != readFile(fp, &buf, 1))
@@ -2232,7 +2246,7 @@ static int retriveFromFile(const char *path, u8 *buf, u32 sz)
       #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0))
 			set_fs(KERNEL_DS);
       #else
-            set_fs(get_ds());
+      set_fs(get_ds())
       #endif
 			ret = readFile(fp, buf, sz);
 			set_fs(oldfs);
@@ -2271,7 +2285,7 @@ static int storeToFile(const char *path, u8 *buf, u32 sz)
       #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0))
 			set_fs(KERNEL_DS);
       #else
-			set_fs(get_ds());
+      set_fs(get_ds())
       #endif
 			ret = writeFile(fp, buf, sz);
 			set_fs(oldfs);
