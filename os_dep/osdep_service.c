@@ -2201,11 +2201,11 @@ static int isFileReadable(const char *path, u32 *sz)
 		ret = PTR_ERR(fp);
 	else {
 		oldfs = get_fs();
-	if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0))
+	#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0))
 		set_fs(KERNEL_DS);
-	else
-	(get_ds());
-	endif
+	#else
+		set_fs(get_ds());
+	#endif
 
 		if (1 != readFile(fp, &buf, 1))
 			ret = PTR_ERR(fp);
